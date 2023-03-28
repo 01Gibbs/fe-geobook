@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View } from 'react-native';
 import { UserProfile } from "./Components/UserProfile";
 import { HomePage } from './Components/HomePage';
+import { Map } from './Components/Map';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ export default function App() {
     <View style={styles.container}>
     <Text>GeoBook</Text>
     <NavigationContainer>
-    <Stack.Navigator initialRouteName='User Profile'>
+    <Stack.Navigator initialRouteName='Map'>
         <Stack.Screen
           name="User Profile"
           component={UserProfile}
@@ -23,6 +24,11 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomePage}
+          // options={{title: 'Welcome'}}
+        />
+        <Stack.Screen
+          name="Map"
+          component={Map}
           // options={{title: 'Welcome'}}
         />
       </Stack.Navigator>
