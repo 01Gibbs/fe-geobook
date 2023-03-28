@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       borderColor: '#000000',
-      borderWidth: '1px',
+      // borderWidth: '1px',
 
     },
   });

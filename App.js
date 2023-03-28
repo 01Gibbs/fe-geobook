@@ -1,40 +1,23 @@
-import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {styles} from "./style_sheets/global"
-import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
-import { UserProfile } from "./Components/UserProfile";
-import { HomePage } from './Components/HomePage';
-import { Map } from './Components/Map';
-
-const Stack = createNativeStackNavigator();
+import React from 'react';
+import {MapView, Marker} from 'react-native-maps';
+import { StyleSheet, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-    <Text>GeoBook</Text>
-    <NavigationContainer>
-    <Stack.Navigator initialRouteName='Map'>
-        <Stack.Screen
-          name="User Profile"
-          component={UserProfile}
-          // options={{title: 'Welcome'}}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomePage}
-          // options={{title: 'Welcome'}}
-        />
-        <Stack.Screen
-          name="Map"
-          component={Map}
-          // options={{title: 'Welcome'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+      <MapView style={styles.map}>
+        <Marker coordinate={{latitude: 54, longitude: -3}}/>
+      </MapView>
     </View>
   );
 }
 
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+  },
+});
