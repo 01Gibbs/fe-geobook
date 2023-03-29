@@ -7,7 +7,7 @@ import * as Location from "expo-location";
 
 export default function App() {
   function createKey(location) {
-    return location.latitude + location.longitude;
+    return location.latitude + location.longitude + Math.random()*100;
   }
 
   const [mapRegion, setMapRegion] = useState({
