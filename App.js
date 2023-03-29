@@ -44,6 +44,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.container}>
       <MapView style={styles.map} region={mapRegion}>
         {locations.map((location) => (
           <Marker key={`mk${createKey(location)}`} coordinate={location} />
@@ -58,6 +59,7 @@ export default function App() {
         ))}
         <Marker coordinate={mapRegion} title="Gibbs Edit"></Marker>
       </MapView>
+      </View>
       <Button title="Get  Location" onPress={userLocation} />
     </View>
   );
