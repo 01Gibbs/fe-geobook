@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import MapView, { Circle } from "react-native-maps";
-import { Marker } from "react-native-maps";
 import { StyleSheet, View, Button } from "react-native";
+import MapView, { Circle, Marker } from "react-native-maps";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { locations } from "./coordinates";
 import * as Location from "expo-location";
 
 export default function App() {
   function createKey(location) {
-    return location.latitude + location.longitude + Math.random()*100;
+    return location.latitude + location.longitude + Math.random() * 100;
   }
 
   const [mapRegion, setMapRegion] = useState({
@@ -43,31 +43,42 @@ export default function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View
+        style={styles.navbar}
+      ></View>
       <View style={styles.container}>
-      <MapView style={styles.map} region={mapRegion}>
-        {locations.map((location) => (
-          <Marker key={`mk${createKey(location)}`} coordinate={location} />
-        ))}
-        {locations.map((location) => (
-          <Circle
-            key={`c${createKey(location)} + ${Math.random()*10}`}
-            center={location}
-            radius={2000}
-            fillColor="rgba(100,100,100,0.2)"
-          />
-        ))}
-        <Marker coordinate={mapRegion} title="Gibbs Edit"></Marker>
-      </MapView>
+        <View style={styles.container}>
+          <MapView style={styles.map} region={mapRegion}>
+            {locations.map((location) => (
+              <Marker key={`mk${createKey(location)}`} coordinate={location} />
+            ))}
+            {locations.map((location) => (
+              <Circle
+                key={`c${createKey(location)} + ${Math.random() * 10}`}
+                center={location}
+                radius={2000}
+                fillColor="rgba(100,100,100,0.2)"
+              />
+            ))}
+            <Marker coordinate={mapRegion} title="Gibbs Edit"></Marker>
+          </MapView>
+        </View>
+        <Button title="Get  Location" onPress={userLocation} />
       </View>
-      <Button title="Get  Location" onPress={userLocation} />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  navbar: {
+    backgroundColor: "lightgreen",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
   },
   map: {
     width: "100%",
