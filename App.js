@@ -1,10 +1,10 @@
 import React from 'react'
 import MapView, { Circle } from 'react-native-maps'
 import { Marker } from 'react-native-maps'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { locations } from './coordinates'
 import { NavigationContainer } from '@react-navigation/native'
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,12 +26,16 @@ export default function App () {
 
 const Login = ({navigation}) => {
   return (
-    <Button
-      title="Login"
-      onPress={() =>
-        navigation.navigate('Map')
-      }
-    />
+    <View style={styles.loginContainer}>
+      <Text>Your email:</Text>
+      <TextInput style={styles.input}/>
+      <Button
+        title="Login"
+        onPress={() =>
+          navigation.navigate('Map')
+        }
+      />
+    </View>
   );
 };
 
@@ -67,5 +71,16 @@ const styles = StyleSheet.create({
   map: {
     width: '100%',
     height: '100%'
+  },
+  loginContainer: {
+    flex: 1,
+    alignItems: "center"
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#777",
+    padding: 6,
+    margin: 10,
+    width: 200
   }
 })
