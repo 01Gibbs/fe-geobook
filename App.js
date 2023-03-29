@@ -13,11 +13,11 @@ export default function App () {
     <View style={styles.container}>
       <MapView style={styles.map}>
         {locations.map(location => (
-          <Marker key={`mk${createKey(location)}`} coordinate={location} />
+          <Marker key={`mk${createKey(location)} + ${Math.random()*10}`} coordinate={location} />
         ))}
         {locations.map(location => (
           <Circle
-            key={`c${createKey(location)}`}
+            key={`c${createKey(location)} + ${Math.random()*10}`}
             center={location}
             radius={2000}
             fillColor='rgba(100,100,100,0.2)'
