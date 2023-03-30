@@ -6,8 +6,31 @@ import { StyleSheet } from "react-native";
 
 import { locations } from "../coordinates";
 import * as Location from "expo-location";
+import { getBooks } from "../data/api";
 
 const Map = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [location, setLocation] = useState(null);
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    // GeoJSON coords are reversed ({ longitude: -1.9299841, latitude: 55.6707727 })
+    getBooks().then((bookData) => {
+      setLocation(
+        bookData.map((book) => {
+          return {
+            longitude: book.location.coordinates[0],
+            latitude: book.location.coordinates[1],
+          };
+        })
+      );
+      setIsLoading(false);
+      console.log(location);
+      // setBooks(()=>{})
+    });
+  });
+
   function createKey(location) {
     return location.latitude + location.longitude + Math.random() * 100;
   }
