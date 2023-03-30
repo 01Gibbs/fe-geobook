@@ -3,6 +3,7 @@ import { Button, Text, TextInput, View } from "react-native";
 const Login = ({navigation}) => {
     return (
       <View>
+        <Text>Login:</Text>
         <Text>Your email:</Text>
         <TextInput/>
         <Button
