@@ -19,8 +19,9 @@ export default function App() {
     <NavigationContainer >
       {isSignedIn ? (
         <>
-          <Tab.Navigator>
-            <Tab.Screen name="Map" component={Map} />
+          <Tab.Navigator
+          >
+            <Tab.Screen options={{headerShown:false}} name="Map" component={Map} />
             <Tab.Screen name='Profile' >
             {(props) => <Profile {...props}  isSignedIn={isSignedIn}setIsSignedIn={setIsSignedIn}/>}
             </Tab.Screen>
