@@ -1,22 +1,22 @@
 import { Button, Text, TextInput, View } from "react-native";
 
-const Login = ({navigation, isSignedIn, setIsSignedIn}) => {
-  const handleSignIn = ()=>{
-    isSignedIn ? setIsSignedIn(false) : setIsSignedIn(true)
-    console.log(isSignedIn)
-  }
-
-
-    return (
-      <View>
-        <Text>Login:</Text>
-        <Text>Your email:</Text>
-        <TextInput/>
-        <Button title="Login"
-        onPress={handleSignIn}
-        />
-      </View>
-    );
+const Login = ({ navigation, setIsSignedIn }) => {
+  const handleSignIn = () => {
+    setIsSignedIn(true);
   };
 
-  export default Login
+  const handleSignUp = () => {
+    
+  };
+  return (
+    <View>
+      <Text>Login:</Text>
+      <Text>Your email:</Text>
+      <TextInput />
+      <Button title="Login" onPress={handleSignIn} />
+      <Button title="SignUp" onPress={handleSignUp} />
+    </View>
+  );
+};
+
+export default Login;

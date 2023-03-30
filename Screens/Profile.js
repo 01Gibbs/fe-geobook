@@ -1,9 +1,15 @@
-import { Text, View } from "react-native";
+import { Text, View, Button } from "react-native";
 
-const Profile = () => {
+const Profile = ({navigation, setIsSignedIn}) => {
+  const handleSignOut = ()=>{
+    setIsSignedIn(false)
+  }
     return (
       <View>
         <Text>This is your profile page!:</Text>
+        <Button title="Log out"
+        onPress={handleSignOut}
+        />
       </View>
     );
   };
