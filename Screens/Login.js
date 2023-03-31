@@ -29,9 +29,10 @@ const Login = ({ navigation, setIsSignedIn }) => {
       <Text>Your email:</Text>
       <TextInput onChangeText={(val) => setEmail(val)} />
       <Text>Password :</Text>
-      <TextInput onChangeText={(val) => setPassword(val)} />
+      <TextInput secureTextEntry={true} onChangeText={(val) => setPassword(val)} />
 
       <Button title="Login" onPress={handleSignIn} />
+      <Text>Don't have an account?</Text>
       <Button title="SignUp" onPress={handleSignUp} />
     </View>
   );

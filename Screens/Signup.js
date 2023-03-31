@@ -27,7 +27,7 @@ const Signup = ({navigation, setIsSignedIn}) => {
         <Text>Your email:</Text>
         <TextInput onChangeText={val => setEmail(val)}/>
         <Text>Create password:</Text>
-        <TextInput onChangeText={val => setPassword(val)}/>
+        <TextInput secureTextEntry={true} onChangeText={val => setPassword(val)}/>
         <Button title="Sign Up" onPress={handlePress}/>
       </View>
     );

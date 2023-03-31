@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import { UserContext } from "./context/UserContext";
 import { UserProvider } from "./context/UserContext";
 
 import Login from "./Screens/Login";
@@ -17,6 +18,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  // const [user, setUser] = useContext(UserContext);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
