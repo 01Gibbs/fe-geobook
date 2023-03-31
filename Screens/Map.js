@@ -50,9 +50,11 @@ const Map = ({ navigation }) => {
         })
       )
       setIsLoading(false)
-      userLocation()
+      
     })
   }, [])
+
+  useEffect(()=>{userLocation()}, [Location])
 
   function createKey (location) {
     return location.latitude + location.longitude + Math.random() * 100
