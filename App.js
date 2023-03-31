@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -9,12 +9,28 @@ import Signup from "./Screens/Signup";
 import Map from "./Screens/Map";
 import Profile from "./Screens/Profile";
 import PostABook from "./Screens/PostABook";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebaseConfig"
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(uid)
+        setIsSignedIn(true)
+        // setUser(uid)
+      } else {
+        setIsSignedIn(false)
+      }
+    })
+  }, [])
+
   return (
     <UserProvider>
       <NavigationContainer >

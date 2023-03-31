@@ -2,12 +2,18 @@ import { useEffect, useState, useContext } from "react";
 import { Text, View, Button, Image } from "react-native";
 import { getUser } from "../data/api";
 import { UserContext } from "../context/UserContext";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebaseConfig"
 
 const Profile = ({navigation, setIsSignedIn}) => {
   const [stateUser, setUser] = useContext(UserContext);
 
   const handleSignOut = ()=>{
-    setIsSignedIn(false)
+    signOut(auth).then(() => {
+      console.log("You're signed out")
+    }).catch((error) => {
+      console.log(error)
+    })
   }
   const user_id = "642548555b3c0d0478ba585d"
   const [isLoading, setIsLoading] = useState(true)

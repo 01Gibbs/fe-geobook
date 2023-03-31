@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Button, Text, TextInput, View } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { UserContext } from "../context/UserContext";
@@ -9,12 +9,11 @@ const Signup = ({navigation, setIsSignedIn}) => {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
+  
   const handlePress = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setIsSignedIn(true)
   })
    .catch((error) => {
       const errorCode = error.code;

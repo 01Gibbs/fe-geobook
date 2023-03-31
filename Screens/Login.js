@@ -1,6 +1,5 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Button, Text, TextInput, View } from "react-native";
-import { UserContext } from "../context/UserContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "../firebaseConfig"
@@ -8,14 +7,11 @@ import { auth } from "../firebaseConfig"
 const Login = ({ navigation, setIsSignedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [stateUser, setUser] = useContext(UserContext);
 
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setIsSignedIn(true);
-        setUser({...stateUser,_id : user.uid })
       })
       .catch((error) => {
         const errorCode = error.code;
