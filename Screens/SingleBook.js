@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View } from "react-native"
 import { getBook } from "../data/api"
 
 export const SingleBook = ({ route, navigation}) => {
-    const {book_id} = route.params
+    const {book_id} = route.params || {book_id:1}
     const [bookInfo, setBookInfo] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -13,7 +13,7 @@ export const SingleBook = ({ route, navigation}) => {
             setBookInfo(book)
             setIsLoading(false)
         })
-    },[])
+    },[book_id])
 
 
     return isLoading? null: <View>
