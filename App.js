@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { UserProvider } from "./context/UserContext";
 
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
@@ -16,32 +16,34 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   return (
-    <NavigationContainer >
-      {isSignedIn ? (
-        <>
-          <Tab.Navigator>
-            <Tab.Screen options={{headerShown:false}} name="Map" component={Map} />
-            <Tab.Screen name='Profile' >
-            {(props) => <Profile {...props}  isSignedIn={isSignedIn}setIsSignedIn={setIsSignedIn}/>}
-            </Tab.Screen>
-            <Tab.Screen name="Post a Book" component={PostABook} />
-          </Tab.Navigator>
-        </>
-      ) : (
-        <>
-          <Stack.Navigator >
-            <Stack.Screen  
-            name="SignIn" > 
-              {(props) => <Login {...props} isSignedIn={isSignedIn}  setIsSignedIn={setIsSignedIn}/>}
-            </Stack.Screen>
-            <Stack.Screen 
-            name="SignUp" >
-            {(props) => <Signup {...props} isSignedIn={isSignedIn}  setIsSignedIn={setIsSignedIn}/>}
+    <UserProvider>
+      <NavigationContainer >
+        {isSignedIn ? (
+          <>
+            <Tab.Navigator>
+              <Tab.Screen options={{headerShown:false}} name="Map" component={Map} />
+              <Tab.Screen name='Profile' >
+              {(props) => <Profile {...props}  isSignedIn={isSignedIn}setIsSignedIn={setIsSignedIn}/>}
+              </Tab.Screen>
+              <Tab.Screen name="Post a Book" component={PostABook} />
+            </Tab.Navigator>
+          </>
+        ) : (
+          <>
+            <Stack.Navigator >
+              <Stack.Screen  
+              name="SignIn" > 
+                {(props) => <Login {...props} isSignedIn={isSignedIn}  setIsSignedIn={setIsSignedIn}/>}
               </Stack.Screen>
-          </Stack.Navigator>
-        </>
-      )}
-    </NavigationContainer>
+              <Stack.Screen 
+              name="SignUp" >
+              {(props) => <Signup {...props} isSignedIn={isSignedIn}  setIsSignedIn={setIsSignedIn}/>}
+                </Stack.Screen>
+            </Stack.Navigator>
+          </>
+        )}
+      </NavigationContainer>
+    </UserProvider>
   );
 }
 

@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Text, View, Button, Image } from "react-native";
 import { getUser } from "../data/api";
+import { UserContext } from "../context/UserContext";
 
 const Profile = ({navigation, setIsSignedIn}) => {
+  const [stateUser, setUser] = useContext(UserContext);
+
   const handleSignOut = ()=>{
     setIsSignedIn(false)
   }
@@ -17,9 +20,6 @@ const Profile = ({navigation, setIsSignedIn}) => {
       const {name, username, claimed_books} = userData
       setUserProfileInfo({name, username, claimed_books})
       setIsLoading(false)
-
-     
-
     }).catch(err => console.log(err))
   },[user_id])
 
