@@ -6,10 +6,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
-import Map from "./Screens/Map";
 import Profile from "./Screens/Profile";
 import PostABook from "./Screens/PostABook";
-import { SingleBook } from "./Screens/SingleBook";
+import { MapScreen } from "./Screens/MapScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,13 +22,13 @@ export default function App() {
           <Tab.Navigator
           >
             <Tab.Screen options={{headerShown:false}} name="Map" >
-              {(props) => <Map {...props} />}
+              {(props) => <MapScreen {...props} />}
               </Tab.Screen>
             <Tab.Screen name='Profile' >
             {(props) => <Profile {...props}  isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn}/>}
             </Tab.Screen>
             <Tab.Screen name="Post a Book" component={PostABook} />
-            <Tab.Screen name='Book Information' component={SingleBook} />
+            {/* <Tab.Screen name='Book Information' component={SingleBook} /> */}
           </Tab.Navigator>
         </>
       ) : (
