@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, View } from "react-native";
-import MapView, { Circle, Marker } from "react-native-maps";
+import { Circle, Marker } from "react-native-maps";
 import { StyleSheet } from "react-native";
+import MapView from "react-native-map-clustering"
 
 import * as Location from "expo-location";
 import { getBooks } from "../data/api";
@@ -39,30 +40,30 @@ const Map = () => {
     // longitude: null,
     // latitudeDelta: null,
     // longitudeDelta: null,
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitude: 53.797193, 
+    longitude: -1.556831,
+    latitudeDelta: 10,
+    longitudeDelta: 10,
   });
 
-  const userLocation = async () => {
-    // await console.log('Fetching current location')
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      setErrorMsg("Permission to access location was denied");
-    }
-    let location = await Location.getCurrentPositionAsync({
-      enableHighAccuracy: true,
-    });
-    // await console.log('Done')
-    setMapRegion({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    });
-    // console.log(location.coords.latitude, location.coords.longitude);
-  };
+
+  // const userLocation = async () => {
+  //   // await console.log('Fetching current location')
+  //   let { status } = await Location.requestForegroundPermissionsAsync();
+  //   if (status !== "granted") {
+  //     setErrorMsg("Permission to access location was denied");
+  //   }
+  //   let location = await Location.getCurrentPositionAsync({
+  //     enableHighAccuracy: true,
+  //   });
+  //   // await console.log('Done')
+  //   setMapRegion({
+  //     latitude: location.coords.latitude,
+  //     longitude: location.coords.longitude,
+  //     latitudeDelta: 10,
+  //     longitudeDelta: 10,
+  //   });
+  // };
 
   useEffect(() => {
     userLocation();
@@ -107,8 +108,9 @@ const Map = () => {
               <Circle
                 key={`c${createKey(location)} + ${Math.random() * 10}`}
                 center={location}
-                radius={2000}
+                radius={20}
                 fillColor="rgba(100,100,100,0.2)"
+                strokeWidth={0}
               />
             ))}
             <Marker coordinate={mapRegion} title="Gibbs Edit"></Marker>
