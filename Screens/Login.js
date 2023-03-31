@@ -6,7 +6,7 @@ const Login = ({ navigation, setIsSignedIn }) => {
   };
 
   const handleSignUp = () => {
-    
+    navigation.navigate('SignUp')
   };
   return (
     <View>
