@@ -3,17 +3,15 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig"
 
-
-
-const Signup = ({navigation}) => {
+const Signup = ({navigation, setIsSignedIn}) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-    const handlePress = () => {
-
+  const handlePress = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        setIsSignedIn(true)
         console.log(user)
   })
    .catch((error) => {
@@ -22,8 +20,6 @@ const Signup = ({navigation}) => {
       console.log(errorCode, errorMessage)
   });
   }
-
-
     return (
       <View>
         <Text>Signup:</Text>

@@ -14,13 +14,12 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [isSignedIn, setIsSignedIn] = useState(false); // the state you want to pass
+  const [isSignedIn, setIsSignedIn] = useState(false);
   return (
     <NavigationContainer >
       {isSignedIn ? (
         <>
-          <Tab.Navigator
-          >
+          <Tab.Navigator>
             <Tab.Screen options={{headerShown:false}} name="Map" component={Map} />
             <Tab.Screen name='Profile' >
             {(props) => <Profile {...props}  isSignedIn={isSignedIn}setIsSignedIn={setIsSignedIn}/>}
@@ -35,7 +34,10 @@ export default function App() {
             name="SignIn" > 
               {(props) => <Login {...props} isSignedIn={isSignedIn}  setIsSignedIn={setIsSignedIn}/>}
             </Stack.Screen>
-            <Stack.Screen name="SignUp" component={Signup}  />
+            <Stack.Screen 
+            name="SignUp" >
+            {(props) => <Signup {...props} isSignedIn={isSignedIn}  setIsSignedIn={setIsSignedIn}/>}
+              </Stack.Screen>
           </Stack.Navigator>
         </>
       )}
