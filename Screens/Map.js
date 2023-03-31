@@ -6,13 +6,15 @@ import { StyleSheet } from 'react-native'
 import MapView from 'react-native-map-clustering'
 
 import * as Location from 'expo-location'
+import * as TaskManager from 'expo-task-manager'
 import { getBooks } from '../data/api'
 
 const Map = ({ navigation }) => {
+  const LOCATION_TRACKING = 'location-tracking'
+  const [usersLocation, setUsersLocation] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [locations, setLocations] = useState(null)
   const [books, setBooks] = useState([])
-  const [usersLocation, setUsersLocation] = useState(null)
 
   const mapRegion = {
     latitude: 53.797193,
@@ -24,8 +26,9 @@ const Map = ({ navigation }) => {
   const mapRef = useRef()
 
   useEffect(() => {
+    startLocationTracking()
     setIsLoading(true)
-    userLocation()
+
     getBooks().then(bookData => {
       setLocations(
         bookData.map(book => {
@@ -47,6 +50,7 @@ const Map = ({ navigation }) => {
         })
       )
       setIsLoading(false)
+      userLocation()
     })
   }, [])
 
@@ -56,6 +60,7 @@ const Map = ({ navigation }) => {
 
   const userLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
+    let resb = await Location.requestBackgroundPermissionsAsync()
     if (status !== 'granted') {
       setErrorMsg('Permission to access location was denied')
     }
@@ -73,6 +78,19 @@ const Map = ({ navigation }) => {
       mapRef.current.animateToRegion(usersLocation, 2000)
     }
     animateToRegion()
+  }
+
+  const [locationStarted, setLocationStarted] = useState(false)
+  const startLocationTracking = async () => {
+    await Location.startLocationUpdatesAsync(LOCATION_TRACKING, {
+      accuracy: Location.Accuracy.Highest,
+      timeInterval: 1000,
+      distanceInterval: 0
+    })
+    const hasStarted = await Location.hasStartedLocationUpdatesAsync(
+      LOCATION_TRACKING
+    )
+    setLocationStarted(hasStarted)
   }
 
   const styles = StyleSheet.create({
@@ -102,6 +120,23 @@ const Map = ({ navigation }) => {
     }
   })
 
+  TaskManager.defineTask(LOCATION_TRACKING, async ({ data, error }) => {
+    if (error) {
+      console.log(error)
+    }
+    if (data) {
+      const { locations } = data
+      let lat = locations[0].coords.latitude
+      let long = locations[0].coords.longitude
+      setUsersLocation({
+        latitude: lat,
+        longitude: long,
+        latitudeDelta: 0.1,
+        longitudeDelta: 0.1
+      })
+    }
+  })
+
   return isLoading ? null : (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -110,7 +145,13 @@ const Map = ({ navigation }) => {
             {locations.map((location, index) => {
               return (
                 <Marker key={`mk${createKey(location)}`} coordinate={location}>
-                  <Callout onPress={() => navigation.navigate('Book Information', {book_id: books[index].id})}>
+                  <Callout
+                    onPress={() =>
+                      navigation.navigate('Book Information', {
+                        book_id: books[index].id
+                      })
+                    }
+                  >
                     <Text>Book information</Text>
                     <Text>Genre: {books[index].genre}</Text>
                     <Text>Left by: {books[index].posted_by}</Text>
@@ -128,12 +169,7 @@ const Map = ({ navigation }) => {
               />
             ))}
             {!usersLocation ? null : (
-              <Marker coordinate={usersLocation} title='You are here!'>
-                <Callout>
-                  <Text>Test</Text>
-                  <Button title='Get more Info' />
-                </Callout>
-              </Marker>
+              <Marker coordinate={usersLocation} title='You are here!'></Marker>
             )}
           </MapView>
         </View>
@@ -142,4 +178,5 @@ const Map = ({ navigation }) => {
     </SafeAreaView>
   )
 }
+
 export default Map
