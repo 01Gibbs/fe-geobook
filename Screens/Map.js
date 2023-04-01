@@ -4,14 +4,11 @@ import { Button, Text, View } from 'react-native'
 import { Circle, Marker, Callout } from 'react-native-maps'
 import { StyleSheet } from 'react-native'
 import MapView from 'react-native-map-clustering'
-
 import * as Location from 'expo-location'
-
 import { getBooks } from '../data/api'
 import { TrackingMarker } from './Map-Components/TrackingMarker'
 
 const Map = ({ navigation }) => {
-
   const [usersLocation, setUsersLocation] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [locations, setLocations] = useState(null)
@@ -50,11 +47,9 @@ const Map = ({ navigation }) => {
         })
       )
       setIsLoading(false)
-      
     })
+    userLocation()
   }, [])
-
-  useEffect(()=>{userLocation()}, [Location])
 
   function createKey (location) {
     return location.latitude + location.longitude + Math.random() * 100
@@ -81,8 +76,6 @@ const Map = ({ navigation }) => {
     }
     animateToRegion()
   }
-
-
 
   const styles = StyleSheet.create({
     container: {
@@ -111,31 +104,35 @@ const Map = ({ navigation }) => {
     }
   })
 
-
-
-  return isLoading ? null : (
+  return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <View style={styles.container}>
           <MapView style={styles.map} region={mapRegion} ref={mapRef}>
-            {locations.map((location, index) => {
-              return (
-                <Marker key={`mk${createKey(location)}`} coordinate={location}>
-                  <Callout
-                    onPress={() =>
-                      navigation.navigate('Book Information', {
-                        book_id: books[index].id
-                      })
-                    }
-                  >
-                    <Text>Book information</Text>
-                    <Text>Genre: {books[index].genre}</Text>
-                    <Text>Left by: {books[index].posted_by}</Text>
-                  </Callout>
-                </Marker>
-              )
-            })}
-            {locations.map(location => (
+            {isLoading
+              ? null
+              : locations.map((location, index) => {
+                  return (
+                    <Marker
+                      key={`mk${createKey(location)}`}
+                      coordinate={location}
+                    >
+                      <Callout
+                        onPress={() =>
+                          navigation.navigate('Book Information', {
+                            book_id: books[index].id
+                          })
+                        }
+                      >
+                        <Text>Book information</Text>
+                        <Text>Genre: {books[index].genre}</Text>
+                        <Text>Left by: {books[index].posted_by}</Text>
+                      </Callout>
+                    </Marker>
+                  )
+                })}
+            {isLoading
+              ? null : locations.map(location => (
               <Circle
                 key={`c${createKey(location)} + ${Math.random() * 10}`}
                 center={location}
