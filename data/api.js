@@ -27,3 +27,7 @@ export const postBook = (book) => {
     return data.book
   })
 }
+
+export const deleteBook = book_id => {
+  return geobookApi.delete(`/books/${book_id}`)
+}

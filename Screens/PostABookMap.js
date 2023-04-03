@@ -36,7 +36,7 @@ export const PostABookMap = ({ navigation }) => {
           onPress={() => {
             navigation.navigate("Post a Book", {
               // ? is null required
-              location: markerCoordinate,
+              location: { coordinates: [markerCoordinate.longitude, markerCoordinate.latitude] },
               book_id: null,
               location_description: null,
             });
