@@ -21,3 +21,9 @@ export const getBook = book_id => {
     return data.book
   })
 }
+
+export const postBook = (book) => {
+  return geobookApi.post('/books', book).then(({data}) => {
+    return data.book
+  })
+}

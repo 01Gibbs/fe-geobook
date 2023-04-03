@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button, Text, View } from 'react-native'
 import { Circle, Marker, Callout } from 'react-native-maps'
@@ -7,6 +7,7 @@ import MapView from 'react-native-map-clustering'
 import * as Location from 'expo-location'
 import { getBooks } from '../data/api'
 import { TrackingMarker } from './Map-Components/TrackingMarker'
+import { useFocusEffect } from '@react-navigation/native'
 
 const Map = ({ navigation }) => {
   const [usersLocation, setUsersLocation] = useState(null)
@@ -23,33 +24,35 @@ const Map = ({ navigation }) => {
 
   const mapRef = useRef()
 
-  useEffect(() => {
-    setIsLoading(true)
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true)
 
-    getBooks().then(bookData => {
-      setLocations(
-        bookData.map(book => {
-          return {
-            longitude: book.location.coordinates[0],
-            latitude: book.location.coordinates[1]
-          }
-        })
-      )
+      getBooks().then(bookData => {
+        setLocations(
+          bookData.map(book => {
+            return {
+              longitude: book.location.coordinates[0],
+              latitude: book.location.coordinates[1]
+            }
+          })
+        )
 
-      setBooks(
-        bookData.map(book => {
-          return {
-            id: book._id,
-            genre: book.genre,
-            location_description: book.location_description,
-            posted_by: book.posted_by
-          }
-        })
-      )
-      setIsLoading(false)
-    })
-    userLocation()
-  }, [])
+        setBooks(
+          bookData.map(book => {
+            return {
+              id: book._id,
+              genre: book.genre,
+              location_description: book.location_description,
+              posted_by: book.posted_by
+            }
+          })
+        )
+        setIsLoading(false)
+      })
+      userLocation()
+    }, [])
+  )
 
   function createKey (location) {
     return location.latitude + location.longitude + Math.random() * 100
@@ -76,7 +79,6 @@ const Map = ({ navigation }) => {
     }
     animateToRegion()
   }
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,15 +108,16 @@ const Map = ({ navigation }) => {
                   )
                 })}
             {isLoading
-              ? null : locations.map(location => (
-              <Circle
-                key={`c${createKey(location)} + ${Math.random() * 10}`}
-                center={location}
-                radius={20}
-                fillColor='rgba(100,100,100,0.2)'
-                strokeWidth={0}
-              />
-            ))}
+              ? null
+              : locations.map(location => (
+                  <Circle
+                    key={`c${createKey(location)} + ${Math.random() * 10}`}
+                    center={location}
+                    radius={20}
+                    fillColor='rgba(100,100,100,0.2)'
+                    strokeWidth={0}
+                  />
+                ))}
             <TrackingMarker />
           </MapView>
         </View>
@@ -124,32 +127,31 @@ const Map = ({ navigation }) => {
   )
 }
 
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1
-    },
-    map: {
-      width: '100%',
-      height: '100%'
-    },
-    navbar: {
-      backgroundColor: 'lightgreen',
-      height: 50,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    loginContainer: {
-      flex: 1,
-      alignItems: 'center'
-    },
-    input: {
-      borderWidth: 1,
-      borderColor: '#777',
-      padding: 6,
-      margin: 10,
-      width: 200
-    }
-  })
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  map: {
+    width: '100%',
+    height: '100%'
+  },
+  navbar: {
+    backgroundColor: 'lightgreen',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loginContainer: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#777',
+    padding: 6,
+    margin: 10,
+    width: 200
+  }
+})
 
 export default Map
