@@ -25,7 +25,6 @@ const Signup = ({navigation, setIsSignedIn}) => {
         }
 
         const data = {
-          _id:user.uid,
           username: username,
           firebase_id: user.uid,
           name: name
