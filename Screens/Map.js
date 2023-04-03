@@ -4,13 +4,11 @@ import { Button, Text, View } from 'react-native'
 import { Circle, Marker, Callout } from 'react-native-maps'
 import { StyleSheet } from 'react-native'
 import MapView from 'react-native-map-clustering'
-
 import * as Location from 'expo-location'
-import * as TaskManager from 'expo-task-manager'
 import { getBooks } from '../data/api'
+import { TrackingMarker } from './Map-Components/TrackingMarker'
 
 const Map = ({ navigation }) => {
-  const LOCATION_TRACKING = 'location-tracking'
   const [usersLocation, setUsersLocation] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [locations, setLocations] = useState(null)
@@ -26,7 +24,6 @@ const Map = ({ navigation }) => {
   const mapRef = useRef()
 
   useEffect(() => {
-    startLocationTracking()
     setIsLoading(true)
 
     getBooks().then(bookData => {
@@ -50,11 +47,9 @@ const Map = ({ navigation }) => {
         })
       )
       setIsLoading(false)
-      
     })
+    userLocation()
   }, [])
-
-  useEffect(()=>{userLocation()}, [Location])
 
   function createKey (location) {
     return location.latitude + location.longitude + Math.random() * 100
@@ -62,7 +57,7 @@ const Map = ({ navigation }) => {
 
   const userLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
-    let resb = await Location.requestBackgroundPermissionsAsync()
+
     if (status !== 'granted') {
       setErrorMsg('Permission to access location was denied')
     }
@@ -70,7 +65,7 @@ const Map = ({ navigation }) => {
       enableHighAccuracy: true
     })
 
-    setUsersLocation({
+    await setUsersLocation({
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
       latitudeDelta: 0.1,
@@ -82,18 +77,53 @@ const Map = ({ navigation }) => {
     animateToRegion()
   }
 
-  const [locationStarted, setLocationStarted] = useState(false)
-  const startLocationTracking = async () => {
-    await Location.startLocationUpdatesAsync(LOCATION_TRACKING, {
-      accuracy: Location.Accuracy.Highest,
-      timeInterval: 1000,
-      distanceInterval: 0
-    })
-    const hasStarted = await Location.hasStartedLocationUpdatesAsync(
-      LOCATION_TRACKING
-    )
-    setLocationStarted(hasStarted)
-  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <View style={styles.container}>
+          <MapView style={styles.map} region={mapRegion} ref={mapRef}>
+            {isLoading
+              ? null
+              : locations.map((location, index) => {
+                  return (
+                    <Marker
+                      key={`mk${createKey(location)}`}
+                      coordinate={location}
+                    >
+                      <Callout
+                        onPress={() =>
+                          navigation.navigate('Book Information', {
+                            book_id: books[index].id
+                          })
+                        }
+                      >
+                        <Text>Book information</Text>
+                        <Text>Genre: {books[index].genre}</Text>
+                        <Text>Left by: {books[index].posted_by}</Text>
+                      </Callout>
+                    </Marker>
+                  )
+                })}
+            {isLoading
+              ? null : locations.map(location => (
+              <Circle
+                key={`c${createKey(location)} + ${Math.random() * 10}`}
+                center={location}
+                radius={20}
+                fillColor='rgba(100,100,100,0.2)'
+                strokeWidth={0}
+              />
+            ))}
+            <TrackingMarker />
+          </MapView>
+        </View>
+        <Button title='Get Location' onPress={userLocation} />
+      </View>
+    </SafeAreaView>
+  )
+}
+
 
   const styles = StyleSheet.create({
     container: {
@@ -121,64 +151,5 @@ const Map = ({ navigation }) => {
       width: 200
     }
   })
-
-  TaskManager.defineTask(LOCATION_TRACKING, async ({ data, error }) => {
-    if (error) {
-      console.log(error)
-    }
-    if (data) {
-      const { locations } = data
-      let lat = locations[0].coords.latitude
-      let long = locations[0].coords.longitude
-      setUsersLocation({
-        latitude: lat,
-        longitude: long,
-        latitudeDelta: 0.1,
-        longitudeDelta: 0.1
-      })
-    }
-  })
-
-  return isLoading ? null : (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <View style={styles.container}>
-          <MapView style={styles.map} region={mapRegion} ref={mapRef}>
-            {locations.map((location, index) => {
-              return (
-                <Marker key={`mk${createKey(location)}`} coordinate={location}>
-                  <Callout
-                    onPress={() =>
-                      navigation.navigate('Book Information', {
-                        book_id: books[index].id
-                      })
-                    }
-                  >
-                    <Text>Book information</Text>
-                    <Text>Genre: {books[index].genre}</Text>
-                    <Text>Left by: {books[index].posted_by}</Text>
-                  </Callout>
-                </Marker>
-              )
-            })}
-            {locations.map(location => (
-              <Circle
-                key={`c${createKey(location)} + ${Math.random() * 10}`}
-                center={location}
-                radius={20}
-                fillColor='rgba(100,100,100,0.2)'
-                strokeWidth={0}
-              />
-            ))}
-            {!usersLocation ? null : (
-              <Marker coordinate={usersLocation} title='You are here!'></Marker>
-            )}
-          </MapView>
-        </View>
-        <Button title='Get Location' onPress={userLocation} />
-      </View>
-    </SafeAreaView>
-  )
-}
 
 export default Map
