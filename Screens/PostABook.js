@@ -2,14 +2,14 @@ import { Text, View, TextInput, Button, StyleSheet } from 'react-native'
 import { useState } from 'react'
 import { postBook } from '../data/api'
 
-const PostABook = ({ navigation }) => {
-  // const {location} = navigation.params
+const PostABook = ({ navigation, route }) => {
+  const {location, book_id, location_description} = route.params
   // const user = useContext(UserContext)
   const user = 'testUser'
-  const location = {
-    type: 'Point',
-    coordinates: [-2.6137, 55.8435]
-  }
+  // const location = {
+  //   type: 'Point',
+  //   coordinates: [-2.6137, 55.8435]
+  // }
 
   const [postBookForm, setPostBookForm] = useState(null)
   const [formFields, setFormFields] = useState({
