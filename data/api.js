@@ -1,4 +1,17 @@
-import axios from 'axios'
+import { auth } from '../firebaseConfig.js'
+import axios from "axios";
+
+const createToken = async () => {
+  const user = auth.currentUser
+  const token = user && (await user.getIdToken())
+  const payloadHeader = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  }
+  return payloadHeader
+}
 
 const geobookApi = axios.create({
   baseURL: 'https://geobook-api.onrender.com/api'
@@ -29,10 +42,14 @@ export const postBook = (book) => {
 }
 
 
-export const postUser = (data) => {
-  return geobookApi.post(`/users`, data)
+export const postUser = async (data) => {
+  const header = await createToken()
+  return geobookApi.post(`/users`, data, header)
   .then(({data})=>{
     console.log(data, '<posUser -> api.js')
     return data.user
+  })
+  .catch((e) => {
+    console.log(e)
   })
 };
