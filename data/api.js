@@ -27,3 +27,12 @@ export const postBook = (book) => {
     return data.book
   })
 }
+
+
+export const postUser = (data) => {
+  return geobookApi.post(`/users`, data)
+  .then(({data})=>{
+    console.log(data, '<posUser -> api.js')
+    return data.user
+  })
+};

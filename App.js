@@ -1,20 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { UserProvider } from "./context/UserContext";
 
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
 import Profile from "./Screens/Profile";
 import { MapScreen } from "./Screens/MapScreen";
 import { PostABookMapScreen } from "./Screens/PostABookMapScreen";
+import PostABook from "./Screens/PostABook";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebaseConfig"
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [isSignedIn, setIsSignedIn] = useState(false); // the state you want to pass
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        //Find user by 
+          setIsSignedIn(true)
+      } else {
+        setIsSignedIn(false)
+      }
+    })
+  }, [])
+
   return (
+    <UserProvider>
     <NavigationContainer>
       {isSignedIn ? (
         <>
@@ -55,5 +72,7 @@ export default function App() {
         </>
       )}
     </NavigationContainer>
+
+    </UserProvider>
   );
 }
