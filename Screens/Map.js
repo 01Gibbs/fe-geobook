@@ -15,7 +15,7 @@ const Map = () => {
   const LoadingAnimation = () => {
     return (
       <View style={loader.container}>
-        <ActivityIndicator size="large" color="#333" />
+        <ActivityIndicator size="30%" color="#333" />
       </View>
     );
   };
@@ -33,7 +33,7 @@ const Map = () => {
         })
       );
       // console.log(locations);
-      // setIsLoading(false);
+      setIsLoading(false);
       // setBooks(()=>{})
     });
   }, []);
