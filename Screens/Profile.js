@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Text, View, Button, Image } from "react-native";
 import { getUser } from "../data/api";
 
-const Profile = ({navigation, setIsSignedIn}) => {
+const Profile = ({setIsSignedIn}) => {
   const handleSignOut = ()=>{
     setIsSignedIn(false)
   }
-  const user_id = "642548555b3c0d0478ba585d"
+  const user_id = "02d1fad1-1022-4e88-93c8-e0fcc0874306"
   const [isLoading, setIsLoading] = useState(true)
   const [userProfileInfo, setUserProfileInfo] = useState(null)
   
@@ -20,7 +20,7 @@ const Profile = ({navigation, setIsSignedIn}) => {
 
      
 
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err.toJSON()))
   },[user_id])
 
 

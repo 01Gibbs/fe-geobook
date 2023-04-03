@@ -29,7 +29,7 @@ const PostABook = ({ navigation, route }) => {
       location: { coordinates: [location.longitude, location.latitude] },
     })
       .then((book) => {
-        console.log(book);
+        // Display for user?
       })
       .catch((err) => console.log(err.toJSON()));
   };
