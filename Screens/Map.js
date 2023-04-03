@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, View } from "react-native";
 import MapView, { Circle, Marker } from "react-native-maps";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ActivityIndicator } from "react-native";
 
 import * as Location from "expo-location";
 import { getBooks } from "../data/api";
@@ -11,6 +11,14 @@ const Map = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [locations, setLocations] = useState(null);
   const [books, setBooks] = useState([]);
+
+  const LoadingAnimation = () => {
+    return (
+      <View style={loader.container}>
+        <ActivityIndicator size="large" color="#333" />
+      </View>
+    );
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,7 +33,7 @@ const Map = () => {
         })
       );
       // console.log(locations);
-      setIsLoading(false);
+      // setIsLoading(false);
       // setBooks(()=>{})
     });
   }, []);
@@ -68,6 +76,18 @@ const Map = () => {
     userLocation();
   }, []);
 
+  const loader = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+    },
+    horizontal: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      padding: 10,
+    },
+  });
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -95,7 +115,9 @@ const Map = () => {
     },
   });
 
-  return isLoading ? null : (
+  return isLoading ? (
+    LoadingAnimation()
+  ) : (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <View style={styles.container}>
