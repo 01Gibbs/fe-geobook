@@ -17,13 +17,6 @@ const Signup = ({navigation, setIsSignedIn}) => {
       .then((userCredential) => {
         const user = userCredential.user;
 
-        const createToken = async () => {
-        const user = fire.auth().currentUser;
-        const token = user && (await user.getIdToken());
-
-        return payloadHeader;
-        }
-
         const data = {
           username: username,
           firebase_id: user.uid,
