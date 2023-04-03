@@ -8,10 +8,10 @@ const PostABook = ({ navigation }) => {
   const user = 'testUser'
   const location = {
     type: 'Point',
-    coordinates: [-1.6137, 55.8435]
+    coordinates: [-2.6137, 55.8435]
   }
 
-  
+  const [postBookForm, setPostBookForm] = useState(null)
   const [formFields, setFormFields] = useState({
     title: '',
     author: '',
