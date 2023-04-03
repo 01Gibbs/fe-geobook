@@ -5,6 +5,7 @@ import { postBook } from "../data/api";
 const PostABook = ({ navigation, route }) => {
   const { location, book_id, location_description } = route.params;
   // console.log(book_id, location_description);
+  console.log(book_id)
 
   // const user = useContext(UserContext)
   const user = "testUser";

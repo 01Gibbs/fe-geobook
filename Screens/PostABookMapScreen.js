@@ -13,7 +13,6 @@ export const PostABookMapScreen = () => {
         name="PostABookMap"
         component={PostABookMap}
       >
-        {/* {(props) => <Map {...props} />} */}
       </Stack.Screen>
       <Stack.Screen name="Post a Book" component={PostABook} />
     </Stack.Navigator>
