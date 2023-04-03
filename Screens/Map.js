@@ -125,31 +125,31 @@ const Map = ({ navigation }) => {
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  map: {
-    width: '100%',
-    height: '100%'
-  },
-  navbar: {
-    backgroundColor: 'lightgreen',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  loginContainer: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#777',
-    padding: 6,
-    margin: 10,
-    width: 200
-  }
-})
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1
+    },
+    map: {
+      width: '100%',
+      height: '100%'
+    },
+    navbar: {
+      backgroundColor: 'lightgreen',
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    loginContainer: {
+      flex: 1,
+      alignItems: 'center'
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: '#777',
+      padding: 6,
+      margin: 10,
+      width: 200
+    }
+  })
 
 export default Map
