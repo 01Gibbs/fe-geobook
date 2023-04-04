@@ -4,13 +4,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { UserProvider } from "./context/UserContext";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
 import Profile from "./Screens/Profile";
 import { MapScreen } from "./Screens/MapScreen";
 import { PostABookMapScreen } from "./Screens/PostABookMapScreen";
-import PostABook from "./Screens/PostABook";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import ClaimedBooks from "./Screens/ClaimedBooks";
@@ -37,9 +37,31 @@ export default function App() {
   const ProfileStackScreen = () => {
     return (
       <ProfileStack.Navigator>
-        <ProfileStack.Screen name="ProfilePage" component={Profile} />
-        <ProfileStack.Screen name="ClaimedBooks" component={ClaimedBooks} />
+        <ProfileStack.Screen
+          name="ProfilePage"
+          options={{ headerShown: false }}
+          component={Profile}
+        />
+        <ProfileStack.Screen
+          name="ClaimedBooks"
+          options={{ headerShown: false }}
+          component={ClaimedBooks}
+        />
       </ProfileStack.Navigator>
+    );
+  };
+
+  const displayTabIcons = (focused, color, size, route) => {
+    let iconName;
+    if (route.name === "Map") {
+      iconName = focused ? "map" : "map-outline";
+    } else if (route.name === "Profile") {
+      iconName = focused ? "person" : "person-outline";
+    } else if (route.name === "PostABookScreen") {
+      iconName = focused ? "book" : "book-outline";
+    }
+    return (
+      <Ionicons name={iconName} size={size} color={color} />
     );
   };
 
@@ -49,7 +71,17 @@ export default function App() {
         <NavigationContainer>
           {isSignedIn ? (
             <>
-              <Tab.Navigator>
+              <Tab.Navigator
+                screenOptions={({ route }) => ({
+                  tabBarActiveTintColor: "#5CDB95",
+                  tabBarInactiveTintColor: "gray",
+                  tabBarStyle: [{display: "flex",}, null ],
+                  tabBarIcon: ({ focused, color, size }) => {
+                    return displayTabIcons(focused, color, size, route)
+                    
+                  },
+                })}
+              >
                 <Tab.Screen options={{ headerShown: false }} name="Map">
                   {(props) => <MapScreen {...props} />}
                 </Tab.Screen>
@@ -59,7 +91,7 @@ export default function App() {
                   component={ProfileStackScreen}
                 />
                 <Tab.Screen
-                  name="Post a Book Screen"
+                  name="PostABookScreen"
                   component={PostABookMapScreen}
                 />
                 {/* <Tab.Screen name='Book Information' component={SingleBook} /> */}
