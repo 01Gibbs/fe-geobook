@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import {
-  Button,
   Pressable,
   StyleSheet,
   Text,
@@ -14,7 +13,7 @@ import { auth } from '../firebaseConfig'
 const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
   const [bookTitle, setBookTitle] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
-  const [toast, setToast] = useState(false)
+
   const user_id = auth.currentUser.uid
   console.log(bookInfo.title)
   const handlePress = () => {

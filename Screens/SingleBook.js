@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import { getBook } from '../data/api'
 import FoundBook from './FoundBook'
 
@@ -24,29 +24,69 @@ export const SingleBook = ({ route, navigation }) => {
       navigation={navigation}
     />
   ) : (
-    <View>
-      <Text>Genre: {bookInfo.genre}</Text>
-      <Text>Location description: {bookInfo.location_description}</Text>
-      <Text>Left by: {bookInfo.posted_by}</Text>
-      <Button onPress={() => navigation.goBack()} title='Go Back' />
-      <Button title='Found book' onPress={() => setFoundBook(true)} />
+    <View style={styles.container}>
+       <View style={styles.main}>  
+      <Text style={styles.title}>Genre</Text>
+      <Text style={styles.description}>{bookInfo.genre}</Text>
+      <Text style={styles.title}>Location description</Text>
+      <Text style={styles.description}>{bookInfo.location_description}</Text>
+      <Text style={styles.title}>Left by</Text>
+      <Text style={styles.description}>{bookInfo.posted_by}</Text>
+      <Pressable style={styles.submit} onPress={() => navigation.goBack()} ><Text>GO BACK</Text></Pressable>
+      <Pressable style={styles.submit}  onPress={() => setFoundBook(true)} ><Text>FOUND BOOK</Text></Pressable>
+    </View>
     </View>
   )
 }
-
 const styles = StyleSheet.create({
   container: {
+    padding:20,
     flex: 1,
+    backgroundColor:'#2B5F6B',
+    justifyContent:'center',
+    alignContent:'center',
+  },
+  header: {
+    alignItems: 'left',
+    alignText:'left',
+
+  },
+  title: {
+    fontSize:18,
+    fontWeight: 600,
+  },
+  description: {
+    fontSize:16,
+    marginBottom:15,
+  },
+  main: {
+    margin:0,
+    padding:10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor:'#F5F5F5',
+    // backgroundColor:'#132235',
+    borderRadius:5,
   },
   input: {
-    width: '80%',
+    alignItems:'center',
+    alignSelf: 'stretch',
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginVertical: 10
+    marginTop: 5,
+  },
+  submit: {
+    backgroundColor:'#5CDB95',
+    alignSelf: 'stretch',
+    borderRadius:5,
+    alignItems:'center',
+    padding:10,
+    marginBottom:15,
+  },
+  error: {
+    color: 'red'
   }
 })
