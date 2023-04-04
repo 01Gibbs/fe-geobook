@@ -1,8 +1,12 @@
 import { Text, View, Image, Button, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import { getUser } from "../data/api";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { auth } from "../firebaseConfig";
+
 
 const ClaimedBooks = ({ navigation, route }) => {
+  const user = auth.currentUser
 
   const generateBookId = ()=>{
     return Math.random() * 100000
@@ -49,7 +53,7 @@ const ClaimedBooks = ({ navigation, route }) => {
     },
   });
 
-  const user_id = '3cfa269a-bfb1-4a31-a6d2-e776c199e5eb'
+  const user_id = user.uid
   const [isLoading, setIsLoading] = useState(true)
   const [userProfileInfo, setUserProfileInfo] = useState(null)
   
@@ -64,7 +68,7 @@ const ClaimedBooks = ({ navigation, route }) => {
   },[user_id])
 
   return isLoading ? <Text>Loading...</Text> : (
-    <View >
+    <SafeAreaView >
       {userProfileInfo.claimed_books.map(book => {
         return (
           <View key={generateBookId()}style={styles.container}>
@@ -79,7 +83,7 @@ const ClaimedBooks = ({ navigation, route }) => {
         </View>
         )
   })}
-    </View>
+    </SafeAreaView>
   );
 
   

@@ -4,7 +4,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getUser } from "../data/api";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
-import { getAuth } from "firebase/auth";
 
 const Profile = ({ navigation }) => {
   const styles = StyleSheet.create({
