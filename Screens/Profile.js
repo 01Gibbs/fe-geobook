@@ -83,7 +83,7 @@ const Profile = ({ navigation }) => {
       color: "#666",
     },
     logout: {
-      justifyContent:"center",
+      justifyContent: "center",
       marginTop: 30,
       padding: 10,
       flexDirection: "row",
@@ -97,8 +97,8 @@ const Profile = ({ navigation }) => {
   const user = auth.currentUser;
 
   // useEffect(() => {
-    //Get current user id
-    //For details and location
+  //Get current user id
+  //For details and location
   //   console.log(auth);
   // }, [user]);
 
@@ -119,7 +119,7 @@ const Profile = ({ navigation }) => {
   //Wait for auth to get current user firebase id
   //set it to getUSer()
 
-  const user_id = "3cfa269a-bfb1-4a31-a6d2-e776c199e5eb";
+  const user_id = user.uid;
   const [isLoading, setIsLoading] = useState(true);
   const [userProfileInfo, setUserProfileInfo] = useState(null);
 
