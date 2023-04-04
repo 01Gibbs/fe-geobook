@@ -13,6 +13,7 @@ import PostABook from "./Screens/PostABook";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig"
 import ClaimedBooks from "./Screens/ClaimedBooks";
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
