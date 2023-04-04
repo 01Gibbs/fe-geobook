@@ -1,11 +1,11 @@
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useState } from "react";
-import { postBook } from "../data/api";
+import { deleteBook, postBook } from "../data/api";
 
 const PostABook = ({ navigation, route }) => {
   const { location, book_id, location_description } = route.params;
   // console.log(book_id, location_description);
-  console.log(book_id)
+  // console.log(book_id)
 
   // const user = useContext(UserContext)
   const user = "testUser";
@@ -27,15 +27,20 @@ const PostABook = ({ navigation, route }) => {
     postBook({
       ...formFields,
       posted_by: user,
-      location: { coordinates: [location.longitude, location.latitude] },
+      location,
     })
       .then((book) => {
-        // Display for user?
+        setPostBookForm(book)
       })
       .catch((err) => console.log(err.toJSON()));
+    if (book_id) {
+      deleteBook(book_id)
+      console.log("book deleted")
+    }
   };
 
   return (
+    postBookForm ? null : 
     <View style={styles.container}>
       <Text>Post your book here!</Text>
       <TextInput

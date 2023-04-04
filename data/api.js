@@ -41,6 +41,9 @@ export const postBook = (book) => {
   })
 }
 
+export const deleteBook = book_id => {
+  return geobookApi.delete(`/books/${book_id}`)
+}
 
 export const postUser = async (data) => {
   const header = await createToken()
