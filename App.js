@@ -59,16 +59,6 @@ export default function App() {
       ) : (
         <>
           <Stack.Navigator>
-          <Stack.Screen options={{ headerShown: false }}   name="Profile">
-              {(props) => (
-                <Profile
-                  {...props}
-                  isSignedIn={isSignedIn}
-                  setIsSignedIn={setIsSignedIn}
-                />
-              )}
-            </Stack.Screen>
-            <Stack.Screen  name="ClaimedBooks" component={ClaimedBooks}/>
             <Stack.Screen name="SignIn">
               {(props) => (
                 <Login
