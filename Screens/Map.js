@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Button, Text, View } from 'react-native'
+import { ActivityIndicator, Button, Text, View } from 'react-native'
 import { Circle, Marker, Callout } from 'react-native-maps'
 import { StyleSheet } from 'react-native'
 import MapView from 'react-native-map-clustering'
@@ -10,10 +10,22 @@ import { TrackingMarker } from './Map-Components/TrackingMarker'
 import { useFocusEffect } from '@react-navigation/native'
 
 const Map = ({ navigation }) => {
-  const [usersLocation, setUsersLocation] = useState(null)
+  const [usersLocation, setUsersLocation] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [locations, setLocations] = useState(null)
   const [books, setBooks] = useState([])
+
+  const LoadingAnimation = () => {
+    return (
+      <View style={loader.container}>
+        <ActivityIndicator size="30%" color="#333" />
+      </View>
+    );
+  };
+
+
+  function createKey(location) {
+    return location.latitude + location.longitude + Math.random() * 100;}
 
   const mapRegion = {
     latitude: 53.797193,
@@ -29,6 +41,7 @@ const Map = ({ navigation }) => {
       setIsLoading(true)
 
       getBooks().then(bookData => {
+        console.log(bookData)
         setLocations(
           bookData.map(book => {
             return {
@@ -49,7 +62,7 @@ const Map = ({ navigation }) => {
           })
         )
         setIsLoading(false)
-      })
+      }).catch(err => console.log('error ==>',err))
       userLocation()
     }, [])
   )
@@ -80,7 +93,52 @@ const Map = ({ navigation }) => {
     animateToRegion()
   }
 
-  return (
+  useEffect(() => {
+    userLocation();
+  }, []);
+
+  const loader = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+    },
+    horizontal: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      padding: 10,
+    },
+  });
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    map: {
+      width: "100%",
+      height: "100%",
+    },
+    navbar: {
+      backgroundColor: "lightgreen",
+      height: 50,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    loginContainer: {
+      flex: 1,
+      alignItems: "center",
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: "#777",
+      padding: 6,
+      margin: 10,
+      width: 200,
+    },
+  });
+
+  return isLoading ? (
+    LoadingAnimation()
+  ) : (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <View style={styles.container}>
