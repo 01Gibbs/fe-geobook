@@ -1,8 +1,6 @@
 import { Text, View, Image, Button, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import { getUser } from "../data/api";
-import { SafeAreaView } from "react-native-safe-area-context";
-
 
 const ClaimedBooks = ({ navigation, route }) => {
 
@@ -38,7 +36,6 @@ const ClaimedBooks = ({ navigation, route }) => {
     },
     title: {
       fontSize: 12,
-      fontWeight: '#ddd',
       marginBottom: 5,
     },
     author: {
