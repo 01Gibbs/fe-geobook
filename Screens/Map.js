@@ -60,7 +60,7 @@ const Map = ({ navigation }) => {
             }
           })
         )
-        // setIsLoading(false)
+        setIsLoading(false)
       }).catch(err => console.log('error ==>',err))
       userLocation()
     }, [])
