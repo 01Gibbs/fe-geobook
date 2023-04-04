@@ -14,7 +14,7 @@ export const PostABookMapScreen = () => {
         component={PostABookMap}
       >
       </Stack.Screen>
-      <Stack.Screen name="Post a Book" component={PostABook} />
+      <Stack.Screen options={{ headerShown: false }} name="Post a Book" component={PostABook} />
     </Stack.Navigator>
   );
 };

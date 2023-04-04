@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ActivityIndicator, Button, Text, View } from "react-native";
+import { ActivityIndicator, Button, Pressable, Text, View } from "react-native";
 import { Circle, Marker, Callout } from "react-native-maps";
 import { StyleSheet } from "react-native";
 import MapView from "react-native-map-clustering";
@@ -132,10 +132,17 @@ const Map = ({ navigation }) => {
                             book_id: books[index].id,
                           })
                         }
+                        style={styles.bookCallout}
                       >
-                        <Text>Book information</Text>
-                        <Text>Genre: {books[index].genre}</Text>
-                        <Text>Left by: {books[index].posted_by}</Text>
+                        <Text style={styles.calloutHeading}>
+                          Book information
+                        </Text>
+                        <Text style={styles.calloutText}>
+                          Genre: {books[index].genre}
+                        </Text>
+                        <Text style={styles.calloutText}>
+                          Left by: {books[index].posted_by}
+                        </Text>
                       </Callout>
                     </Marker>
                   );
@@ -154,7 +161,15 @@ const Map = ({ navigation }) => {
             <TrackingMarker />
           </MapView>
         </View>
-        <Button title="Get Location" onPress={userLocation} />
+        <Pressable
+          onPress={userLocation}
+          style={({ pressed }) => [
+            styles.button,
+            { backgroundColor: pressed ? "#83dbab" : "#5CDB95" },
+          ]}
+        >
+          <Text style={styles.buttonText}>Get Location</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -184,6 +199,29 @@ const styles = StyleSheet.create({
     padding: 6,
     margin: 10,
     width: 200,
+  },
+  bookCallout: {
+    padding: 8,
+  },
+  calloutHeading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "#2B5F6B",
+  },
+  calloutText: {
+    fontSize: 14,
+    color: "#132235",
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "#132235",
+  },
+  button: {
+    justifyContent: "center",
+    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 
