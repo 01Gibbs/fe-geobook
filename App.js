@@ -12,6 +12,7 @@ import { PostABookMapScreen } from "./Screens/PostABookMapScreen";
 import PostABook from "./Screens/PostABook";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig"
+import ClaimedBooks from "./Screens/ClaimedBooks";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -67,6 +68,7 @@ export default function App() {
                 />
               )}
             </Stack.Screen>
+            <Stack.Screen  name="ClaimedBooks" component={ClaimedBooks}/>
             <Stack.Screen name="SignIn">
               {(props) => (
                 <Login
