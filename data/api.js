@@ -1,5 +1,5 @@
 import { auth } from '../firebaseConfig.js'
-import axios from "axios";
+import axios from 'axios'
 
 const createToken = async () => {
   const user = auth.currentUser
@@ -35,8 +35,8 @@ export const getBook = book_id => {
   })
 }
 
-export const postBook = (book) => {
-  return geobookApi.post('/books', book).then(({data}) => {
+export const postBook = book => {
+  return geobookApi.post('/books', book).then(({ data }) => {
     return data.book
   })
 }
@@ -45,14 +45,32 @@ export const deleteBook = book_id => {
   return geobookApi.delete(`/books/${book_id}`)
 }
 
-export const postUser = async (data) => {
+export const postUser = async data => {
   const header = await createToken()
-  return geobookApi.post(`/users`, data, header)
-  .then(({data})=>{
-    console.log(data, '<posUser -> api.js')
-    return data.user
-  })
-  .catch((e) => {
-    console.log(e)
-  })
-};
+  return geobookApi
+    .post(`/users`, data, header)
+    .then(({ data }) => {
+      console.log(data, '<posUser -> api.js')
+      return data.user
+    })
+    .catch(e => {
+      console.log(e)
+    })
+}
+
+export const patchUser = async (firebase_id, claimed_book) => {
+  return geobookApi
+    .patch(`/users/${firebase_id}`, { claimed_book })
+    .then(({ data }) => {
+      return data.user
+    })
+}
+
+export const getClaimedBookThumbnail = async title => {
+  return axios
+    .get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}`)
+    .then(response => {
+      const bookData = response.data.items[0]
+      return bookData.volumeInfo.imageLinks.smallThumbnail
+    })
+}
