@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { StackActions } from '@react-navigation/native'
+import { useEffect, useState } from 'react'
 import {
   Pressable,
   StyleSheet,
@@ -14,10 +15,15 @@ const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
   const [bookTitle, setBookTitle] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
+
+
+
+
   const user_id = auth.currentUser.uid
   console.log(bookInfo.title)
   const handlePress = () => {
     if (bookTitle.toLowerCase().trim() === bookInfo.title.toLowerCase()) {
+      navigation.dispatch(StackActions.replace('MapPage'))
       setErrorMsg('')
       getClaimedBookThumbnail(bookInfo.title).then(thumbnail => {
         patchUser(user_id, {
