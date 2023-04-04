@@ -31,7 +31,7 @@ const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
         'Congratulations on finding the book! Please leave a new book in its place!',
         { duration: Toast.durations.LONG, position: Toast.positions.CENTER }
       )
-      navigation.navigate('PostABookScreen', {
+      navigation.navigate('Add book', {
         screen: 'Post a Book',
         params: {
           book_id: bookInfo._id,

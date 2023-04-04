@@ -57,7 +57,7 @@ export default function App() {
       iconName = focused ? "map" : "map-outline";
     } else if (route.name === "Profile") {
       iconName = focused ? "person" : "person-outline";
-    } else if (route.name === "PostABookScreen") {
+    } else if (route.name === "Add book") {
       iconName = focused ? "book" : "book-outline";
     }
     return (
@@ -91,7 +91,7 @@ export default function App() {
                   component={ProfileStackScreen}
                 />
                 <Tab.Screen
-                  name="PostABookScreen"
+                  name="Add book"
                   component={PostABookMapScreen}
                 />
                 {/* <Tab.Screen name='Book Information' component={SingleBook} /> */}

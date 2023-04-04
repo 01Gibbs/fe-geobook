@@ -1,6 +1,14 @@
-import { Text, View, TextInput, Button, StyleSheet, Pressable } from 'react-native'
-import { useState } from 'react'
+import {
+  Text,
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Pressable
+} from 'react-native'
+import { useCallback, useState } from 'react'
 import { deleteBook, postBook } from '../data/api'
+import { useFocusEffect } from '@react-navigation/native'
 
 const PostABook = ({ navigation, route }) => {
   const { location, book_id, location_description } = route.params
@@ -18,6 +26,11 @@ const PostABook = ({ navigation, route }) => {
     genre: { msg: '', style: 'none' },
     location_description: { msg: '', style: 'none' }
   })
+  useFocusEffect(
+    useCallback(() => {
+      setPostBookForm(null)
+    }, [])
+  )
 
   const handlePost = e => {
     e.preventDefault()
@@ -28,7 +41,6 @@ const PostABook = ({ navigation, route }) => {
       formFields.genre &&
       formFields.location_description
     ) {
-      
       postBook({
         ...formFields,
         posted_by: user,
@@ -36,11 +48,16 @@ const PostABook = ({ navigation, route }) => {
       })
         .then(book => {
           setPostBookForm(book)
+          setFormFields({
+            title: '',
+            author: '',
+            genre: '',
+            location_description: ''
+          })
         })
         .catch(err => console.log(err.toJSON()))
     } else {
       for (const field in formFields) {
-        
         if (!formFields[field]) {
           formFieldMsgCopy = { ...formMsgCopy[field] }
           formFieldMsgCopy.msg = 'Required'
@@ -56,95 +73,104 @@ const PostABook = ({ navigation, route }) => {
     }
   }
 
-  return postBookForm ? <Text>Your book has been submitted!</Text>: (
+  return postBookForm ? (
     <View style={styles.container}>
-      <View style={styles.main}>   
-      <View styls={styles.header}>
-        <Text style={styles.title}>Post your book here!</Text>
+      <View style={styles.main}>
+        <Text>Your book has been submitted!</Text>
+        <Pressable style={styles.submit} onPress={() => setPostBookForm(null)}>
+          <Text>Submit another book!</Text>
+        </Pressable>
       </View>
-      <TextInput
-        style={styles.input}
-        placeholder='Book Title'
-        value={formFields.title}
-        onChange={e => {
-          setFormFields({ ...formFields, title: e.nativeEvent.text })
-        }}
-        onEndEditing={e => {
-          if (!e.nativeEvent.text)
-            setFormMsg({
-              ...formMsg,
-              title: { msg: 'Required', style: 'error' }
+    </View>
+  ) : (
+    <View style={styles.container}>
+      <View style={styles.main}>
+        <View styls={styles.header}>
+          <Text style={styles.title}>Post your book here!</Text>
+        </View>
+        <TextInput
+          style={styles.input}
+          placeholder='Book Title'
+          value={formFields.title}
+          onChange={e => {
+            setFormFields({ ...formFields, title: e.nativeEvent.text })
+          }}
+          onEndEditing={e => {
+            if (!e.nativeEvent.text)
+              setFormMsg({
+                ...formMsg,
+                title: { msg: 'Required', style: 'error' }
+              })
+            else
+              setFormMsg({ ...formMsg, title: { msg: '', style: 'success' } })
+          }}
+        ></TextInput>
+        <Text style={styles[formMsg.title.style]}>{formMsg.title.msg}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Author'
+          value={formFields.author}
+          onChange={e => {
+            setFormFields({ ...formFields, author: e.nativeEvent.text })
+          }}
+          onEndEditing={e => {
+            if (!e.nativeEvent.text)
+              setFormMsg({
+                ...formMsg,
+                author: { msg: 'Required', style: 'error' }
+              })
+            else
+              setFormMsg({ ...formMsg, author: { msg: '', style: 'success' } })
+          }}
+        ></TextInput>
+        <Text style={styles[formMsg.author.style]}>{formMsg.author.msg}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Genre'
+          value={formFields.genre}
+          onChange={e => {
+            setFormFields({ ...formFields, genre: e.nativeEvent.text })
+          }}
+          onEndEditing={e => {
+            if (!e.nativeEvent.text)
+              setFormMsg({
+                ...formMsg,
+                genre: { msg: 'Required', style: 'error' }
+              })
+            else
+              setFormMsg({ ...formMsg, genre: { msg: '', style: 'success' } })
+          }}
+        ></TextInput>
+        <Text style={styles[formMsg.genre.style]}>{formMsg.genre.msg}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Location description'
+          value={formFields.location_description}
+          onChange={e => {
+            setFormFields({
+              ...formFields,
+              location_description: e.nativeEvent.text
             })
-          else setFormMsg({ ...formMsg, title: { msg: '', style: 'success' } })
-        }}
-      ></TextInput>
-      <Text style={styles[formMsg.title.style]}>{formMsg.title.msg}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder='Author'
-        value={formFields.author}
-        onChange={e => {
-          setFormFields({ ...formFields, author: e.nativeEvent.text })
-        }}
-        onEndEditing={e => {
-          if (!e.nativeEvent.text)
-            setFormMsg({
-              ...formMsg,
-              author: { msg: 'Required', style: 'error' }
-            })
-          else setFormMsg({ ...formMsg, author: { msg: '', style: 'success' } })
-        }}
-      ></TextInput>
-      <Text style={styles[formMsg.author.style]}>{formMsg.author.msg}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder='Genre'
-        value={formFields.genre}
-        onChange={e => {
-          setFormFields({ ...formFields, genre: e.nativeEvent.text })
-        }}
-        onEndEditing={e => {
-          if (!e.nativeEvent.text)
-            setFormMsg({
-              ...formMsg,
-              genre: { msg: 'Required', style: 'error' }
-            })
-          else setFormMsg({ ...formMsg, genre: { msg: '', style: 'success' } })
-        }}
-      ></TextInput>
-      <Text style={styles[formMsg.genre.style]}>{formMsg.genre.msg}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder='Location description'
-        value={formFields.location_description}
-        onChange={e => {
-          setFormFields({
-            ...formFields,
-            location_description: e.nativeEvent.text
-          })
-        }}
-        onEndEditing={e => {
-          if (!e.nativeEvent.text)
-            setFormMsg({
-              ...formMsg,
-              location_description: { msg: 'Required', style: 'error' }
-            })
-          else
-            setFormMsg({
-              ...formMsg,
-              location_description: { msg: '', style: 'success' }
-            })
-        }}
-      ></TextInput>
-      <Text style={styles[formMsg.location_description.style]}>
-        {formMsg.location_description.msg}
-      </Text>
-        <Pressable style={styles.submit}
-        onPress={handlePost}
-        >
+          }}
+          onEndEditing={e => {
+            if (!e.nativeEvent.text)
+              setFormMsg({
+                ...formMsg,
+                location_description: { msg: 'Required', style: 'error' }
+              })
+            else
+              setFormMsg({
+                ...formMsg,
+                location_description: { msg: '', style: 'success' }
+              })
+          }}
+        ></TextInput>
+        <Text style={styles[formMsg.location_description.style]}>
+          {formMsg.location_description.msg}
+        </Text>
+        <Pressable style={styles.submit} onPress={handlePost}>
           <Text>SUBMIT</Text>
         </Pressable>
-
       </View>
     </View>
   )
@@ -152,46 +178,45 @@ const PostABook = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding:20,
+    padding: 20,
     flex: 1,
-    backgroundColor:'#2B5F6B',
-    justifyContent:'center',
-    alignContent:'center',
+    backgroundColor: '#2B5F6B',
+    justifyContent: 'center',
+    alignContent: 'center'
   },
   header: {
     alignItems: 'left',
-    alignText:'left',
-
+    alignText: 'left'
   },
   title: {
-    fontSize:18,
-    marginBottom:15,
+    fontSize: 18,
+    marginBottom: 15
   },
   main: {
-    margin:0,
-    padding:10,
+    margin: 0,
+    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'#F5F5F5',
+    backgroundColor: '#F5F5F5',
     // backgroundColor:'#132235',
-    borderRadius:5,
+    borderRadius: 5
   },
   input: {
-    alignItems:'center',
+    alignItems: 'center',
     alignSelf: 'stretch',
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginTop: 5,
+    marginTop: 5
   },
   submit: {
-    backgroundColor:'#5CDB95',
+    backgroundColor: '#5CDB95',
     alignSelf: 'stretch',
-    borderRadius:5,
-    alignItems:'center',
-    padding:10,
+    borderRadius: 5,
+    alignItems: 'center',
+    padding: 10
   },
   error: {
     color: 'red'
