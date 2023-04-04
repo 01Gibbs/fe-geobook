@@ -12,6 +12,7 @@ import { PostABookMapScreen } from "./Screens/PostABookMapScreen";
 import PostABook from "./Screens/PostABook";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig"
+import {RootSiblingParent} from 'react-native-root-siblings'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,6 +32,7 @@ export default function App() {
   }, [])
 
   return (
+    <RootSiblingParent>
     <UserProvider>
     <NavigationContainer>
       {isSignedIn ? (
@@ -74,5 +76,6 @@ export default function App() {
     </NavigationContainer>
 
     </UserProvider>
+    </RootSiblingParent>
   );
 }
