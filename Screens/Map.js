@@ -15,13 +15,13 @@ const Map = ({ navigation }) => {
   const [locations, setLocations] = useState(null)
   const [books, setBooks] = useState([])
 
-  const LoadingAnimation = () => {
-    return (
-      <View style={loader.container}>
-        <ActivityIndicator size="30%" color="#333" />
-      </View>
-    );
-  };
+  // const LoadingAnimation = () => {
+  //   return (
+  //     <View style={loader.container}>
+  //       <ActivityIndicator size="30%" color="#333" />
+  //     </View>
+  //   );
+  // };
 
 
   function createKey(location) {
@@ -41,7 +41,6 @@ const Map = ({ navigation }) => {
       setIsLoading(true)
 
       getBooks().then(bookData => {
-        console.log(bookData)
         setLocations(
           bookData.map(book => {
             return {
@@ -61,7 +60,7 @@ const Map = ({ navigation }) => {
             }
           })
         )
-        setIsLoading(false)
+        // setIsLoading(false)
       }).catch(err => console.log('error ==>',err))
       userLocation()
     }, [])
@@ -109,37 +108,11 @@ const Map = ({ navigation }) => {
     },
   });
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    map: {
-      width: "100%",
-      height: "100%",
-    },
-    navbar: {
-      backgroundColor: "lightgreen",
-      height: 50,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    loginContainer: {
-      flex: 1,
-      alignItems: "center",
-    },
-    input: {
-      borderWidth: 1,
-      borderColor: "#777",
-      padding: 6,
-      margin: 10,
-      width: 200,
-    },
-  });
 
-  return isLoading ? (
-    LoadingAnimation()
-  ) : (
-    <SafeAreaView style={styles.container}>
+
+  // LoadingAnimation()
+
+  return (<SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <View style={styles.container}>
           <MapView style={styles.map} region={mapRegion} ref={mapRef}>
@@ -181,8 +154,7 @@ const Map = ({ navigation }) => {
         </View>
         <Button title='Get Location' onPress={userLocation} />
       </View>
-    </SafeAreaView>
-  )
+    </SafeAreaView>)
 }
 
 const styles = StyleSheet.create({
