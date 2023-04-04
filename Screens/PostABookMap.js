@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, View } from "react-native";
+import { Button, Pressable, Text, View } from "react-native";
 import { Marker } from "react-native-maps";
 import { StyleSheet } from "react-native";
 import MapView from "react-native-map-clustering";
@@ -18,38 +18,41 @@ export const PostABookMap = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.container}>
-        <View style={styles.container}>
-          <MapView style={styles.map} region={mapRegion}>
-            <Marker
-              coordinate={markerCoordinate}
-              draggable
-              onDragEnd={(e) => {
-                setMarkerCoordinate(e.nativeEvent.coordinate);
-              }}
-              image={require("../assets/book.png")}
-            ></Marker>
-          </MapView>
-        </View>
-        <Button
-          title="Set Book Location"
-          onPress={() => {
-            navigation.navigate("Post a Book", {
-              // ? is null required
-              location: {
-                coordinates: [
-                  markerCoordinate.longitude,
-                  markerCoordinate.latitude,
-                ],
-              },
-              book_id: null,
-              location_description: null,
-            });
-          }}
-        />
+        <MapView style={styles.map} region={mapRegion}>
+          <Marker
+            coordinate={markerCoordinate}
+            draggable
+            onDragEnd={(e) => {
+              setMarkerCoordinate(e.nativeEvent.coordinate);
+            }}
+            image={require("../assets/book.png")}
+          ></Marker>
+        </MapView>
       </View>
-    </SafeAreaView>
+      <Pressable
+        onPress={() => {
+          navigation.navigate("Post a Book", {
+            // ? is null required
+            location: {
+              coordinates: [
+                markerCoordinate.longitude,
+                markerCoordinate.latitude,
+              ],
+            },
+            book_id: null,
+            location_description: null,
+          });
+        }}
+        style={({ pressed }) => [
+          styles.button,
+          { backgroundColor: pressed ? "#83dbab" : "#5CDB95" },
+        ]}
+      >
+        <Text style={styles.buttonText}>Set Book Location</Text>
+      </Pressable>
+    </View>
   );
 };
 
@@ -77,5 +80,15 @@ const styles = StyleSheet.create({
     padding: 6,
     margin: 10,
     width: 200,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "#132235",
+  },
+  button: {
+    justifyContent: "center",
+    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
