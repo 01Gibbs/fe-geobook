@@ -171,6 +171,10 @@ const PostABook = ({ navigation, route }) => {
         <Pressable style={styles.submit} onPress={handlePost}>
           <Text>SUBMIT</Text>
         </Pressable>
+        <Pressable style={styles.submit} onPress={() => navigation.goBack()} >
+          <Text>GO BACK</Text>
+        </Pressable>
+        
       </View>
     </View>
   )
@@ -216,7 +220,8 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     borderRadius: 5,
     alignItems: 'center',
-    padding: 10
+    padding: 10,
+    marginBottom:5
   },
   error: {
     color: 'red'
