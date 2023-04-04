@@ -113,7 +113,7 @@ const Profile = ({ navigation }) => {
   };
 
   const viewClaimedBooks = () => {
-    navigation.navigate("ClaimedBooks", { name: "Jane" });
+    navigation.navigate("ClaimedBooks");
   };
 
   //Wait for auth to get current user firebase id

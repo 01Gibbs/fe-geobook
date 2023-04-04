@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { UserProvider } from "./context/UserContext";
 
 import Login from "./Screens/Login";
@@ -17,6 +18,7 @@ import { RootSiblingParent } from "react-native-root-siblings";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const ProfileStack = createStackNavigator();
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -32,6 +34,15 @@ export default function App() {
     });
   }, []);
 
+  const ProfileStackScreen = () => {
+    return (
+      <ProfileStack.Navigator>
+        <ProfileStack.Screen name="ProfilePage" component={Profile} />
+        <ProfileStack.Screen name="ClaimedBooks" component={ClaimedBooks} />
+      </ProfileStack.Navigator>
+    );
+  };
+
   return (
     <RootSiblingParent>
       <UserProvider>
@@ -42,15 +53,11 @@ export default function App() {
                 <Tab.Screen options={{ headerShown: false }} name="Map">
                   {(props) => <MapScreen {...props} />}
                 </Tab.Screen>
-                <Tab.Screen name="Profile">
-                  {(props) => (
-                    <Profile
-                      {...props}
-                      isSignedIn={isSignedIn}
-                      setIsSignedIn={setIsSignedIn}
-                    />
-                  )}
-                </Tab.Screen>
+                <Tab.Screen
+                  options={{ headerShown: false }}
+                  name="Profile"
+                  component={ProfileStackScreen}
+                />
                 <Tab.Screen
                   name="Post a Book Screen"
                   component={PostABookMapScreen}
@@ -61,7 +68,7 @@ export default function App() {
           ) : (
             <>
               <Stack.Navigator>
-                <Stack.Screen options={{ headerShown: false }} name="SignIn">
+                <Stack.Screen name="SignIn">
                   {(props) => (
                     <Login
                       {...props}
@@ -70,11 +77,7 @@ export default function App() {
                     />
                   )}
                 </Stack.Screen>
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="SignUp"
-                  component={Signup}
-                />
+                <Stack.Screen name="SignUp" component={Signup} />
               </Stack.Navigator>
             </>
           )}
