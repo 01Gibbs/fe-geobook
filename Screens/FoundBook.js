@@ -11,7 +11,7 @@ const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
     if (bookTitle.toLowerCase().trim() === bookInfo.title.toLowerCase()) {
         setErrorMsg('')
       let toast = Toast.show('Congratulations on finding the book! Please leave a new book in its place!', {duration: Toast.durations.LONG, position: Toast.positions.CENTER})
-      navigation.navigate('Post a Book Screen', {
+      navigation.navigate('PostABookScreen', {
         screen: 'Post a Book',
         params: {
           book_id :bookInfo._id,
