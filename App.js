@@ -32,6 +32,7 @@ export default function App() {
   }, [])
 
   return (
+    <RootSiblingParent>
     <UserProvider>
     <NavigationContainer>
       {isSignedIn ? (
@@ -75,5 +76,6 @@ export default function App() {
     </NavigationContainer>
 
     </UserProvider>
+    </RootSiblingParent>
   );
 }
