@@ -1,24 +1,31 @@
 import { useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import Toast from 'react-native-root-toast'
-import { getClaimedBookThumbnail } from '../data/api'
+import { getClaimedBookThumbnail, patchUser } from '../data/api'
+import { auth } from '../firebaseConfig'
 
 const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
   const [bookTitle, setBookTitle] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [toast, setToast] = useState(false)
+  const user_id = auth.currentUser.uid
   console.log(bookInfo.title)
   const handlePress = () => {
     if (bookTitle.toLowerCase().trim() === bookInfo.title.toLowerCase()) {
       setErrorMsg('')
       getClaimedBookThumbnail(bookInfo.title).then(thumbnail => {
-        console.log(thumbnail)
+        patchUser(user_id, {
+          title: bookInfo.title,
+          author: bookInfo.author,
+          genre: bookInfo.genre,
+          thumbnail
+        }).then(res => console.log(res))
       })
       let toast = Toast.show(
         'Congratulations on finding the book! Please leave a new book in its place!',
         { duration: Toast.durations.LONG, position: Toast.positions.CENTER }
       )
-      navigation.navigate('Post a Book Screen', {
+      navigation.navigate('PostABookScreen', {
         screen: 'Post a Book',
         params: {
           book_id: bookInfo._id,
