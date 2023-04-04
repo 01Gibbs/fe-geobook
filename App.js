@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,7 +12,7 @@ import { PostABookMapScreen } from "./Screens/PostABookMapScreen";
 import PostABook from "./Screens/PostABook";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig"
-import {RootSiblingParent} from 'react-native-root-siblings'
+import ClaimedBooks from "./Screens/ClaimedBooks";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
