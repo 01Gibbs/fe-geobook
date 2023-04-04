@@ -1,20 +1,27 @@
 import { useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import Toast from 'react-native-root-toast'
+import { getClaimedBookThumbnail } from '../data/api'
 
 const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
   const [bookTitle, setBookTitle] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [toast, setToast] = useState(false)
   console.log(bookInfo.title)
-  const handlePress =  () => {
+  const handlePress = () => {
     if (bookTitle.toLowerCase().trim() === bookInfo.title.toLowerCase()) {
-        setErrorMsg('')
-      let toast = Toast.show('Congratulations on finding the book! Please leave a new book in its place!', {duration: Toast.durations.LONG, position: Toast.positions.CENTER})
+      setErrorMsg('')
+      getClaimedBookThumbnail(bookInfo.title).then(thumbnail => {
+        console.log(thumbnail)
+      })
+      let toast = Toast.show(
+        'Congratulations on finding the book! Please leave a new book in its place!',
+        { duration: Toast.durations.LONG, position: Toast.positions.CENTER }
+      )
       navigation.navigate('Post a Book Screen', {
         screen: 'Post a Book',
         params: {
-          book_id :bookInfo._id,
+          book_id: bookInfo._id,
           location: bookInfo.location,
           location_description: bookInfo.location_description
         }
