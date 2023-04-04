@@ -28,6 +28,7 @@ export const PostABookMap = ({ navigation }) => {
               onDragEnd={(e) => {
                 setMarkerCoordinate(e.nativeEvent.coordinate);
               }}
+              image={require("../assets/book.png")}
             ></Marker>
           </MapView>
         </View>
@@ -36,7 +37,12 @@ export const PostABookMap = ({ navigation }) => {
           onPress={() => {
             navigation.navigate("Post a Book", {
               // ? is null required
-              location: { coordinates: [markerCoordinate.longitude, markerCoordinate.latitude] },
+              location: {
+                coordinates: [
+                  markerCoordinate.longitude,
+                  markerCoordinate.latitude,
+                ],
+              },
               book_id: null,
               location_description: null,
             });
