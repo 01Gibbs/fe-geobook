@@ -77,7 +77,10 @@ const PostABook = ({ navigation, route }) => {
     <View style={styles.container}>
       <View style={styles.main}>
         <Text>Your book has been submitted!</Text>
-        <Pressable style={styles.submit} onPress={() => setPostBookForm(null)}>
+        <Pressable style={styles.submit} onPress={() => {
+          setPostBookForm(null)
+          navigation.navigate('PostABookMap')
+        }}>
           <Text>Submit another book!</Text>
         </Pressable>
       </View>
@@ -171,7 +174,12 @@ const PostABook = ({ navigation, route }) => {
         <Pressable style={styles.submit} onPress={handlePost}>
           <Text>SUBMIT</Text>
         </Pressable>
-        <Pressable style={styles.submit} onPress={() => navigation.goBack()} >
+        <Pressable style={styles.submit} onPress={() => {
+          if (!book_id) navigation.goBack()
+          else navigation.navigate('Map', {
+            screen: 'MapPage',
+
+          })}} >
           <Text>GO BACK</Text>
         </Pressable>
         
