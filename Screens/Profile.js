@@ -1,13 +1,94 @@
 import { useEffect, useState } from "react";
-import { Text, View, Button, Image } from "react-native";
+import { Text, View, Button, Image, StyleSheet, Pressable } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { getUser } from "../data/api";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig"
 import { getAuth } from "firebase/auth";
 
 const Profile = ({navigation}) => {
+
+  const styles = StyleSheet.create({
+    topBar:{
+      height:100,
+      paddingBottom:5,
+      backgroundColor:'#ddd',
+    },
+    bottomBar:{
+      backgroundColor:'#2b5f6b',
+      padding:15,
+      paddingBottom:0,
+    },
+    avatarContainer:{
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    tinyImg: {
+      margin:10,
+      paddingTop:10,
+      paddingBottom:5,
+      width: 100,
+      height: 100,
+      borderRadius: 100/2,
+    },
+    avatar:{
+      width: 100,
+      height: 100,
+      borderRadius: 100/2,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    name: {
+      color:'#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 5,
+    },
+    location: {
+      padding:0,
+      margin:0,
+      color:'#fff',
+      fontSize: 14,
+      marginBottom: 15,
+    },
+    userItem: {
+      flexDirection:'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    stats: {
+      marginTop:3,
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      width: '100%',
+    },
+    userItem: {
+      padding:20,
+      flexDirection:'row',
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      borderColor:'#ddd',
+    },
+    statValue: {
+      padding:10,
+      marginRight:10,
+      fontSize: 22,
+      fontWeight: 'bold',
+    },
+    statTitle: {
+      fontSize: 14,
+      color: '#666',
+    },
+  })
+
+
   const user = auth.currentUser;
-  // console.log(user.uid, 'uid')
+  console.log(user)
+
+  useEffect(() => {
+    console.log(auth)
+  }, [user]);
 
   const handleSignOut = ()=>{
     signOut(auth).then(() => {
@@ -15,6 +96,10 @@ const Profile = ({navigation}) => {
     }).catch((error) => {
       console.log(error)
     })
+  }
+
+  const viewClaimedBooks = ()=>{
+    console.log('clicked!')
   }
 
 //Wait for auth to get current user firebase id
@@ -34,25 +119,36 @@ const Profile = ({navigation}) => {
 
   }).catch(err => console.log(err, '<getUser profile error'))
   },[user_id])
-    return ( isLoading ?  null :
-      <View>
-        <Text>This is your profile page!:</Text>
-        <Text>{`Name: ${userProfileInfo.name}`}</Text>
-        <Text>{`Username: ${userProfileInfo.username}`}</Text>
-        <Text>Claimed books:</Text>
-        {userProfileInfo.claimed_books.map(book => {
-    return (<View key={book.title + book.author}>
-    <Text>Title: {book.title}</Text>
-    <Text>Author: {book.author}</Text>
-    <Text>Genre: {book.genre}</Text>
-    <Image  style={{width: '50%', height:'50%'}} source={{uri:book.thumbnail}} alt={`${book.title} picture`} ></Image>
-    </View>)
-  })}
-        <Button title="Log out"
-        onPress={handleSignOut}
-        />
+
+  return ( isLoading ? null :
+    <SafeAreaView >
+      <View style={styles.topBar}>
+        <View style={styles.avatarContainer}>
+        <View style={styles.avatar}>
+          <Image style={styles.tinyImg}source={{uri:'https://media.istockphoto.com/photos/funny-cat-is-learning-english-cat-reading-a-book-picture-id526831692'}}/>
+        </View>
+        </View>
       </View>
-    );
-  };
+      <View style={styles.bottomBar}>
+        <Text style={styles.name}>Hello, {userProfileInfo.name}!</Text>
+        <Text style={styles.location}>(user location)</Text>
+        </View>
+      <View style={styles.stats}>
+      <Pressable style={({pressed})=>[
+        styles.userItem,
+        { backgroundColor: pressed ? '#ddd' : '#fff' }, ]}> 
+          <Text style={styles.statValue}>X</Text>
+          <Text style={styles.statTitle}>Claimed</Text>
+        </Pressable>
+        <Pressable style={({pressed})=>[
+        styles.userItem,
+        { backgroundColor: pressed ? '#ddd' : '#fff' },]}> 
+          <Text style={styles.statValue}>X</Text>
+          <Text style={styles.statTitle}>Hides</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
+  );
+};
 
   export default Profile

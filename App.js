@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -58,6 +58,15 @@ export default function App() {
       ) : (
         <>
           <Stack.Navigator>
+          <Stack.Screen options={{ headerShown: false }}   name="Profile">
+              {(props) => (
+                <Profile
+                  {...props}
+                  isSignedIn={isSignedIn}
+                  setIsSignedIn={setIsSignedIn}
+                />
+              )}
+            </Stack.Screen>
             <Stack.Screen name="SignIn">
               {(props) => (
                 <Login
