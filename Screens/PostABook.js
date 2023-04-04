@@ -1,4 +1,4 @@
-import { Text, View, TextInput, Button, StyleSheet } from 'react-native'
+import { Text, View, TextInput, Button, StyleSheet, Pressable } from 'react-native'
 import { useState } from 'react'
 import { deleteBook, postBook } from '../data/api'
 
@@ -58,7 +58,10 @@ const PostABook = ({ navigation, route }) => {
 
   return postBookForm ? <Text>Your book has been submitted!</Text>: (
     <View style={styles.container}>
-      <Text>Post your book here!</Text>
+      <View style={styles.main}>   
+      <View styls={styles.header}>
+        <Text style={styles.title}>Post your book here!</Text>
+      </View>
       <TextInput
         style={styles.input}
         placeholder='Book Title'
@@ -136,25 +139,59 @@ const PostABook = ({ navigation, route }) => {
       <Text style={styles[formMsg.location_description.style]}>
         {formMsg.location_description.msg}
       </Text>
-      <Button title='Submit' onPress={handlePost} />
+        <Pressable style={styles.submit}
+        onPress={handlePost}
+        >
+          <Text>SUBMIT</Text>
+        </Pressable>
+
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    padding:20,
     flex: 1,
+    backgroundColor:'#2B5F6B',
+    justifyContent:'center',
+    alignContent:'center',
+  },
+  header: {
+    alignItems: 'left',
+    alignText:'left',
+
+  },
+  title: {
+    fontSize:18,
+    marginBottom:15,
+  },
+  main: {
+    margin:0,
+    padding:10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor:'#F5F5F5',
+    // backgroundColor:'#132235',
+    borderRadius:5,
   },
   input: {
-    width: '80%',
+    alignItems:'center',
+    alignSelf: 'stretch',
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginVertical: 10
+    marginTop: 5,
+  },
+  submit: {
+    backgroundColor:'#5CDB95',
+    alignSelf: 'stretch',
+    borderRadius:5,
+    alignItems:'center',
+    padding:10,
   },
   error: {
     color: 'red'
