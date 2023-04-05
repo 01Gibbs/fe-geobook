@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Image, Text, TextInput, View, Pressable } from "react-native";
+import { Image, Text, TextInput, View, Pressable, ScrollView } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { postUser } from "../data/api";
@@ -88,6 +88,7 @@ const Signup = () => {
       }
     }
   };
+  
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -96,6 +97,7 @@ const Signup = () => {
           source={require("../assets/geoBook-logo-2.png")}
         />
       </View>
+      <ScrollView keyboardShouldPersistTaps='handled'>
       <View style={styles.formContainer}>
       <View style={styles.main}>
         <View style={styles.header}>
@@ -121,9 +123,7 @@ const Signup = () => {
         <Text style={styles[errorMsg.name.style]}>{errorMsg.name.msg}</Text>
 
         <TextInput
-          placeholder="Username"
-          style={styles.input}
-          onChangeText={(val) => setUsername(val)}
+          placeholder="Username" style={styles.input} onChangeText={(val) => setUsername(val)}
           onEndEditing={(e) => {
             if (!e.nativeEvent.text)
               setErrorMsg({
@@ -192,7 +192,7 @@ const Signup = () => {
         </Pressable>
       </View>
       </View>
-      {/*  */}
+      </ScrollView>
     </View>
   );
 };

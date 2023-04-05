@@ -14,6 +14,8 @@ export const styles = StyleSheet.create({
     paddingBottom:60,
   },
 
+  
+
   main: {
     margin: 0,
     padding: 10,

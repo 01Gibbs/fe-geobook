@@ -5,6 +5,7 @@ import {
   View,
   Pressable,
   Image,
+  ScrollView
 } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {styles} from '../style_sheets/login-signup'
@@ -69,6 +70,7 @@ const Login = ({ navigation }) => {
           source={require("../assets/geoBook-logo-2.png")}
         />
       </View>
+      <ScrollView keyboardShouldPersistTaps='handled'>
       <View style={styles.formContainer}>
       <View style={styles.main}>
         <View style={styles.header}>
@@ -127,7 +129,7 @@ const Login = ({ navigation }) => {
         </Pressable>
       </View>
       </View>
-      {/*  */}
+      </ScrollView>
     </View>
   );
 };
