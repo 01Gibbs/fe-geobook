@@ -72,5 +72,7 @@ export const getClaimedBookThumbnail = async title => {
     .then(response => {
       const bookData = response.data.items[0]
       return bookData.volumeInfo.imageLinks.smallThumbnail
+    }).catch(()=>{
+      return "http://books.google.com/books/content?id=ev52BgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     })
 }
