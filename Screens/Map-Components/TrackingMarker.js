@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Circle, Marker } from 'react-native-maps'
 import * as Location from 'expo-location'
-
-
+import { Image } from 'react-native'
 
 export const TrackingMarker = () => {
   const [location, setLocation] = useState(null)
@@ -30,10 +29,21 @@ export const TrackingMarker = () => {
   }, [])
 
   return location ? (
-      <>
-      <Marker coordinate={location} title='You are here!' >
+    <>
+      <Marker coordinate={location} title='You are here!'>
+        <Image
+          resizeMode='center'
+          style={{ width: 30, height: 30 }}
+          source={require('../../assets/tracking-marker.png')}
+        />
       </Marker>
-      <Circle center={location} radius={accuracy} fillColor='rgba(50,200,256,0.3)' strokeColor='rgba(50,200,256)' strokeWidth={2}/>
-      </>
+      <Circle
+        center={location}
+        radius={accuracy}
+        fillColor='rgba(50,200,256,0.3)'
+        strokeColor='rgba(50,200,256)'
+        strokeWidth={2}
+      />
+    </>
   ) : null
 }
