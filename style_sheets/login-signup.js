@@ -5,10 +5,21 @@ export const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     backgroundColor: "#2B5F6B",
-    justifyContent: "center",
     alignContent: "center",
   },
 
+  formContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    paddingBottom:60,
+  },
+
+  main: {
+    margin: 0,
+    padding: 10,
+    backgroundColor: "#F5F5F5",
+    borderRadius: 5, 
+  },
   header: {
     padding: 15,
     textAlign:'left',
@@ -19,7 +30,7 @@ export const styles = StyleSheet.create({
   },
 
   avatarContainer: {
-    top: -150,
+    // top: -150,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
@@ -37,15 +48,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 15,
   },
-  main: {
-    margin: 0,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5F5F5",
-    // backgroundColor:'#132235',
-    borderRadius: 5,
-  },
+
   input: {
     alignItems: "center",
     alignSelf: "stretch",

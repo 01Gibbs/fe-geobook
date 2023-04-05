@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Button, Text, TextInput, View, StyleSheet } from "react-native";
+import { Image, Text, TextInput, View, Pressable } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { postUser } from "../data/api";
+import { styles } from "../style_sheets/login-signup";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -89,109 +90,126 @@ const Signup = () => {
   };
   return (
     <View style={styles.container}>
-      <Text>Signup:</Text>
-      <Text>Your name:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(val) => setName(val)}
-        onEndEditing={(e) => {
-          if (!e.nativeEvent.text)
-            setErrorMsg({
-              ...errorMsg,
-              name: { msg: "Required", style: "error" },
-            });
-          else
-            setErrorMsg({
-              ...errorMsg,
-              name: { msg: "", style: "success" },
-            });
-        }}
-      />
-      <Text style={styles[errorMsg.name.style]}>{errorMsg.name.msg}</Text>
-      <Text>Your username:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(val) => setUsername(val)}
-        onEndEditing={(e) => {
-          if (!e.nativeEvent.text)
-            setErrorMsg({
-              ...errorMsg,
-              username: { msg: "Required", style: "error" },
-            });
-          else
-            setErrorMsg({
-              ...errorMsg,
-              username: { msg: "", style: "none" },
-            });
-        }}
-      />
-      <Text style={styles[errorMsg.username.style]}>
-        {errorMsg.username.msg}
-      </Text>
-      <Text>Your email:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(val) => setEmail(val)}
-        onEndEditing={(e) => {
-          if (!e.nativeEvent.text)
-            setErrorMsg({
-              ...errorMsg,
-              email: { msg: "Required", style: "error" },
-            });
-          else
-            setErrorMsg({
-              ...errorMsg,
-              email: { msg: "", style: "none" },
-            });
-        }}
-      />
-      <Text style={styles[errorMsg.email.style]}>{errorMsg.email.msg}</Text>
-      <Text>Create password:</Text>
-      <TextInput
-        style={styles.input}
-        secureTextEntry={true}
-        onChangeText={(val) => setPassword(val)}
-        onEndEditing={(e) => {
-          if (!e.nativeEvent.text)
-            setErrorMsg({
-              ...errorMsg,
-              password: { msg: "Required", style: "error" },
-            });
-          else
-            setErrorMsg({
-              ...errorMsg,
-              password: { msg: "", style: "none" },
-            });
-        }}
-      />
-      <Text style={styles[errorMsg.password.style]}>
-        {errorMsg.password.msg}
-      </Text>
-      {firebaseError ? <Text style={styles.error}>{firebaseError}</Text> : null}
+      <View style={styles.avatarContainer}>
+        <Image
+          style={styles.tinyImg}
+          source={require("../assets/geoBook-logo-2.png")}
+        />
+      </View>
+      <View style={styles.formContainer}>
+      <View style={styles.main}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Sign Up: </Text>
+        </View>
+        <TextInput
+          placeholder={"Name"}
+          style={styles.input}
+          onChangeText={(val) => setName(val)}
+          onEndEditing={(e) => {
+            if (!e.nativeEvent.text)
+              setErrorMsg({
+                ...errorMsg,
+                name: { msg: "Required", style: "error" },
+              });
+            else
+              setErrorMsg({
+                ...errorMsg,
+                name: { msg: "", style: "success" },
+              });
+          }}
+        />
+        <Text style={styles[errorMsg.name.style]}>{errorMsg.name.msg}</Text>
 
-      <Button title="Sign Up" onPress={handlePress} />
+        <TextInput
+          placeholder="Username"
+          style={styles.input}
+          onChangeText={(val) => setUsername(val)}
+          onEndEditing={(e) => {
+            if (!e.nativeEvent.text)
+              setErrorMsg({
+                ...errorMsg,
+                username: { msg: "Required", style: "error" },
+              });
+            else
+              setErrorMsg({
+                ...errorMsg,
+                username: { msg: "", style: "none" },
+              });
+          }}
+        />
+        <Text style={styles[errorMsg.username.style]}>
+          {errorMsg.username.msg}
+        </Text>
+        <TextInput
+          placeholder="Email"
+          style={styles.input}
+          onChangeText={(val) => setEmail(val)}
+          onEndEditing={(e) => {
+            if (!e.nativeEvent.text)
+              setErrorMsg({
+                ...errorMsg,
+                email: { msg: "Required", style: "error" },
+              });
+            else
+              setErrorMsg({
+                ...errorMsg,
+                email: { msg: "", style: "none" },
+              });
+          }}
+        />
+        <Text style={styles[errorMsg.email.style]}>{errorMsg.email.msg}</Text>
+        <TextInput
+          placeholder="Password"
+          style={styles.input}
+          secureTextEntry={true}
+          onChangeText={(val) => setPassword(val)}
+          onEndEditing={(e) => {
+            if (!e.nativeEvent.text)
+              setErrorMsg({
+                ...errorMsg,
+                password: { msg: "Required", style: "error" },
+              });
+            else
+              setErrorMsg({
+                ...errorMsg,
+                password: { msg: "", style: "none" },
+              });
+          }}
+        />
+        <Text style={styles[errorMsg.password.style]}>
+          {errorMsg.password.msg}
+        </Text>
+        {firebaseError ? (
+          <Text style={styles.error}>{firebaseError}</Text>
+        ) : null}
+        <Pressable style={styles.submit} onPress={handlePress}>
+          <Text>Sign Up</Text>
+        </Pressable>
+      </View>
+      </View>
+      {/*  */}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    width: "80%",
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginVertical: 10,
-  },
-  error: {
-    color: "red",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   input: {
+//     width: "80%",
+//     borderWidth: 1,
+//     borderColor: "black",
+//     borderRadius: 5,
+//     paddingHorizontal: 10,
+//     paddingVertical: 5,
+//     marginVertical: 10,
+//   },
+//   error: {
+//     color: "red",
+//   },
+// });
 
 export default Signup;

@@ -1,18 +1,13 @@
 import { useState } from "react";
 import {
-  Button,
   Text,
   TextInput,
   View,
-  StyleSheet,
   Pressable,
   Image,
 } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import styles from '../style_sheets/login-signup'
-
-
-
+import {styles} from '../style_sheets/login-signup'
 import { auth } from "../firebaseConfig";
 
 const Login = ({ navigation }) => {
@@ -66,7 +61,6 @@ const Login = ({ navigation }) => {
   const handleSignUp = () => {
     navigation.navigate("SignUp");
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -75,6 +69,7 @@ const Login = ({ navigation }) => {
           source={require("../assets/geoBook-logo-2.png")}
         />
       </View>
+      <View style={styles.formContainer}>
       <View style={styles.main}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Login: </Text>
@@ -126,10 +121,10 @@ const Login = ({ navigation }) => {
           <Text>Click to join!</Text>
         </Pressable>
       </View>
+      </View>
+      {/*  */}
     </View>
   );
 };
-
-
 
 export default Login;
