@@ -2,14 +2,16 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  StyleSheet,
+  ScrollView,
   Pressable
 } from 'react-native'
 import { useCallback, useEffect, useState } from 'react'
 import { deleteBook, getUser, postBook } from '../data/api'
 import { StackActions, useFocusEffect } from '@react-navigation/native'
 import { auth } from '../firebaseConfig'
+import {styles} from '../style_sheets/form-styling'
+import { colours } from '../style_sheets/colours'
+const {geoGreen, geoGreenPressed} = colours
 
 const PostABook = ({ navigation, route }) => {
   const { location, book_id, location_description } = route.params
@@ -100,6 +102,8 @@ const PostABook = ({ navigation, route }) => {
     </View>
   ) : (
     <View style={styles.container}>
+      <ScrollView keyboardShouldPersistTaps='handled'>
+      <View style={styles.formContainer}>
       <View style={styles.main}>
         <View styls={styles.header}>
           <Text style={styles.title}>Post your book here!</Text>
@@ -184,11 +188,13 @@ const PostABook = ({ navigation, route }) => {
         <Text style={styles[formMsg.location_description.style]}>
           {formMsg.location_description.msg}
         </Text>
-        <Pressable style={styles.submit} onPress={handlePost}>
+        <Pressable 
+         style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen },]}
+        onPress={handlePost}>
           <Text>SUBMIT</Text>
         </Pressable>
         <Pressable
-          style={styles.submit}
+        style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen },]}
           onPress={() => {
             if (!book_id) navigation.navigate('PostABookMap')
             else
@@ -200,56 +206,57 @@ const PostABook = ({ navigation, route }) => {
           <Text>GO BACK</Text>
         </Pressable>
       </View>
+      </View>
+      </ScrollView>
     </View>
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    flex: 1,
-    backgroundColor: '#2B5F6B',
-    justifyContent: 'center',
-    alignContent: 'center'
-  },
-  header: {
-    alignItems: 'left',
-    alignText: 'left'
-  },
-  title: {
-    fontSize: 18,
-    marginBottom: 15
-  },
-  main: {
-    margin: 0,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5F5F5',
-    // backgroundColor:'#132235',
-    borderRadius: 5
-  },
-  input: {
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginTop: 5
-  },
-  submit: {
-    backgroundColor: '#5CDB95',
-    alignSelf: 'stretch',
-    borderRadius: 5,
-    alignItems: 'center',
-    padding: 10,
-    marginBottom: 5
-  },
-  error: {
-    color: 'red'
-  }
-})
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 20,
+//     flex: 1,
+//     backgroundColor: '#2B5F6B',
+//     justifyContent: 'center',
+//     alignContent: 'center'
+//   },
+//   header: {
+//     alignItems: 'left',
+//     alignText: 'left'
+//   },
+//   title: {
+//     fontSize: 18,
+//     marginBottom: 15
+//   },
+//   main: {
+//     margin: 0,
+//     padding: 10,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F5F5F5',
+//     borderRadius: 5
+//   },
+//   input: {
+//     alignItems: 'center',
+//     alignSelf: 'stretch',
+//     borderWidth: 1,
+//     borderColor: 'black',
+//     borderRadius: 5,
+//     paddingHorizontal: 10,
+//     paddingVertical: 5,
+//     marginTop: 5
+//   },
+//   submit: {
+//     backgroundColor: '#5CDB95',
+//     alignSelf: 'stretch',
+//     borderRadius: 5,
+//     alignItems: 'center',
+//     padding: 10,
+//     marginBottom: 5
+//   },
+//   error: {
+//     color: 'red'
+//   }
+// })
 
 export default PostABook

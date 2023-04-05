@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, Pressable, Text, View } from "react-native";
+import { Button, Image, Pressable, Text, View } from "react-native";
 import { Marker } from "react-native-maps";
 import { StyleSheet } from "react-native";
 import MapView from "react-native-map-clustering";
@@ -55,8 +55,16 @@ export const PostABookMap = ({ navigation }) => {
             onDragEnd={(e) => {
               setMarkerCoordinate(e.nativeEvent.coordinate);
             }}
-            image={require("../assets/book.png")}
-          ></Marker>
+    
+          >
+            <Image
+    source={require("../assets/book.png")}
+    style={{width: 28, height: 28}}
+    resizeMode="contain"
+    resizeMethod="resize"
+  
+  />
+          </Marker>
         </MapView>
       </View>
       <Pressable

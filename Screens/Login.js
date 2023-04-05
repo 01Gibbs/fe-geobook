@@ -8,8 +8,10 @@ import {
   ScrollView
 } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import {styles} from '../style_sheets/login-signup'
+import {styles} from '../style_sheets/form-styling'
 import { auth } from "../firebaseConfig";
+import { colours } from '../style_sheets/colours'
+const {geoGreen, geoGreenPressed} = colours
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -59,6 +61,7 @@ const Login = ({ navigation }) => {
     }
   };
 
+
   const handleSignUp = () => {
     navigation.navigate("SignUp");
   };
@@ -70,8 +73,9 @@ const Login = ({ navigation }) => {
           source={require("../assets/geoBook-logo-2.png")}
         />
       </View>
-      <ScrollView keyboardShouldPersistTaps='handled'>
       <View style={styles.formContainer}>
+      <ScrollView  keyboardShouldPersistTaps='handled' style={{ flex: 1 }}
+      >
       <View style={styles.main}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Login: </Text>
@@ -116,11 +120,7 @@ const Login = ({ navigation }) => {
           {errorMsg.password.msg}
         </Text>
         <Pressable onPress={handleSignIn}
-        style={({ pressed }) => [
-          styles.submit,
-          { backgroundColor: pressed ? "#83dbab" : "#5CDB95" },
-        ]}
-        >
+        style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen },]}>
           <Text>Login</Text>
         </Pressable>
         <Text>Don't have an account?</Text>
@@ -128,10 +128,11 @@ const Login = ({ navigation }) => {
           <Text>Click to join!</Text>
         </Pressable>
       </View>
-      </View>
       </ScrollView>
+      </View>
     </View>
   );
 };
+
 
 export default Login;
