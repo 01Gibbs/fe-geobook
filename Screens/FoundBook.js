@@ -60,7 +60,7 @@ const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
           value={bookTitle}
           onChange={e => setBookTitle(e.nativeEvent.text)}
         ></TextInput>
-        <Text>{errorMsg}</Text>
+        <Text style={styles.error}>{errorMsg}</Text>
         <Pressable style={styles.submit} onPress={handlePress}>
           <Text>CLAIM BOOK</Text>
         </Pressable>
