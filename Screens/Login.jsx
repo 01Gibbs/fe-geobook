@@ -11,6 +11,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { styles } from "../style_sheets/form-styling";
 import { auth } from "../firebaseConfig";
 import { colours } from "../style_sheets/colours";
+import { SafeAreaView } from "react-native-safe-area-context";
 const { geoGreen, geoGreenPressed } = colours;
 
 const Login = ({ navigation }) => {
@@ -63,7 +64,7 @@ const Login = ({ navigation }) => {
     navigation.navigate("SignUp");
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.avatarContainer}>
         <Image
           style={styles.tinyImg}
@@ -136,7 +137,7 @@ const Login = ({ navigation }) => {
           </View>
         </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

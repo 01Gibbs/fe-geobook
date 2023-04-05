@@ -2,6 +2,7 @@ import { StackActions } from "@react-navigation/native";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import Toast from "react-native-root-toast";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { getClaimedBookThumbnail, patchUser } from "../data/api";
 import { auth } from "../firebaseConfig";
 
@@ -44,7 +45,7 @@ const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>What is the title of the book?</Text>
         <TextInput
@@ -60,7 +61,7 @@ const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
           <Text>GO BACK</Text>
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

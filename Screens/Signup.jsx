@@ -5,6 +5,7 @@ import { auth } from "../firebaseConfig";
 import { postUser } from "../data/api";
 import { styles } from "../style_sheets/form-styling";
 import { colours } from '../style_sheets/colours'
+import { SafeAreaView } from "react-native-safe-area-context";
 const {geoGreen, geoGreenPressed} = colours
 
 const Signup = ({navigation}) => {
@@ -95,7 +96,7 @@ const Signup = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.avatarContainer}>
         <Image
           style={styles.tinyImg}
@@ -198,7 +199,7 @@ const Signup = ({navigation}) => {
       </View>
       </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

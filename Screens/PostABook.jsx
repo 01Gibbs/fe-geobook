@@ -5,6 +5,7 @@ import { StackActions, useFocusEffect } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
 import { styles } from "../style_sheets/form-styling";
 import { colours } from "../style_sheets/colours";
+import { SafeAreaView } from "react-native-safe-area-context";
 const { geoGreen, geoGreenPressed } = colours;
 
 // location_description: feature to be added to keep existing location on post form, user intuitiveness
@@ -81,7 +82,7 @@ const PostABook = ({ navigation, route }) => {
   };
 
   return postBookForm ? (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.main}>
         <Text>Your book has been submitted!</Text>
         <Pressable
@@ -94,9 +95,9 @@ const PostABook = ({ navigation, route }) => {
           <Text>Submit another book!</Text>
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   ) : (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.formContainer}>
           <View style={styles.main}>
@@ -221,7 +222,7 @@ const PostABook = ({ navigation, route }) => {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -6,11 +6,11 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { getUser } from "../data/api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../firebaseConfig";
-import { useFocusEffect } from "@react-navigation/native";
+import { StackActions, useFocusEffect } from "@react-navigation/native";
 import { colours } from "../style_sheets/colours";
 const { geoGreen, geoGreenPressed } = colours;
 
@@ -42,11 +42,19 @@ const ClaimedBooks = ({ navigation }) => {
     }, [user_id])
   );
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      navigation.dispatch(StackActions.replace("ProfilePage"));
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   const noClaimedBooks = () => {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.noBooks}>Oops! No books here.</Text>
-      </View>
+      </SafeAreaView>
     );
   };
 
