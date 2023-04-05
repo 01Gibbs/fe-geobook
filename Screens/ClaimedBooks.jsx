@@ -2,12 +2,11 @@ import {
   Text,
   View,
   Image,
-  Button,
   StyleSheet,
   ScrollView,
   Pressable,
 } from "react-native";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { getUser } from "../data/api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../firebaseConfig";
@@ -15,70 +14,12 @@ import { useFocusEffect } from "@react-navigation/native";
 import { colours } from "../style_sheets/colours";
 const { geoGreen, geoGreenPressed } = colours;
 
-const ClaimedBooks = ({ navigation, route }) => {
+const ClaimedBooks = ({ navigation }) => {
   const user = auth.currentUser;
 
   const generateBookId = () => {
     return Math.random() * 100000;
   };
-
-  const styles = StyleSheet.create({
-    container: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 10,
-      borderWidth: 2,
-      borderColor: "#ddd",
-      borderTopColor: "transparent",
-    },
-    loading:{
-      fontSize:20,
-    },
-    imageContainer: {
-      width: 100,
-      height: 100,
-      borderRadius: 5,
-      overflow: "hidden",
-      marginRight: 10,
-    },
-    thumbnail: {
-      width: "100%",
-      height: "100%",
-    },
-    book: {
-      flex: 1,
-    },
-    prop: {
-      fontWeight: "bold",
-    },
-    title: {
-      fontSize: 12,
-      marginBottom: 5,
-    },
-    author: {
-      fontSize: 10,
-      color: "black",
-      marginBottom: 5,
-    },
-    genre: {
-      fontSize: 10,
-      color: "black",
-    },
-
-    noBooks: {
-      fontSize: 20,
-      color: "gray",
-    },
-    submit: {
-      backgroundColor: "#5CDB95",
-      alignSelf: "stretch",
-      borderRadius: 5,
-      alignItems: "center",
-      padding: 10,
-      marginTop: 5,
-    },
-  });
 
   const handleClaimBooks = () => {
     navigation.navigate("Map");
@@ -168,5 +109,63 @@ const ClaimedBooks = ({ navigation, route }) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    borderWidth: 2,
+    borderColor: "#ddd",
+    borderTopColor: "transparent",
+  },
+  loading: {
+    fontSize: 20,
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 5,
+    overflow: "hidden",
+    marginRight: 10,
+  },
+  thumbnail: {
+    width: "100%",
+    height: "100%",
+  },
+  book: {
+    flex: 1,
+  },
+  prop: {
+    fontWeight: "bold",
+  },
+  title: {
+    fontSize: 12,
+    marginBottom: 5,
+  },
+  author: {
+    fontSize: 10,
+    color: "black",
+    marginBottom: 5,
+  },
+  genre: {
+    fontSize: 10,
+    color: "black",
+  },
+
+  noBooks: {
+    fontSize: 20,
+    color: "gray",
+  },
+  submit: {
+    backgroundColor: "#5CDB95",
+    alignSelf: "stretch",
+    borderRadius: 5,
+    alignItems: "center",
+    padding: 10,
+    marginTop: 5,
+  },
+});
 
 export default ClaimedBooks;

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ActivityIndicator, Button, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { Circle, Marker, Callout } from "react-native-maps";
 import { StyleSheet } from "react-native";
 import MapView from "react-native-map-clustering";
@@ -15,6 +15,7 @@ const Map = ({ navigation }) => {
   const [locations, setLocations] = useState(null);
   const [books, setBooks] = useState([]);
 
+  //Loading Animation: Feature to be Added
   // const LoadingAnimation = () => {
   //   return (
   //     <View style={loader.container}>
@@ -94,21 +95,18 @@ const Map = ({ navigation }) => {
     animateToRegion();
   };
 
-  useEffect(() => {
-    userLocation();
-  }, []);
-
-  const loader = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-    },
-    horizontal: {
-      flexDirection: "row",
-      justifyContent: "space-around",
-      padding: 10,
-    },
-  });
+  // Loading Animation Code: Feature to be Added
+  // const loader = StyleSheet.create({
+  //   container: {
+  //     flex: 1,
+  //     justifyContent: "center",
+  //   },
+  //   horizontal: {
+  //     flexDirection: "row",
+  //     justifyContent: "space-around",
+  //     padding: 10,
+  //   },
+  // });
 
   // LoadingAnimation()
 
