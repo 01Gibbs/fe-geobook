@@ -1,8 +1,10 @@
-import { Text, View, Image, Button, StyleSheet } from "react-native";
-import { useState, useEffect } from "react";
+import { Text, View, Image, Button, StyleSheet, ScrollView, Pressable } from "react-native";
+import { useState, useEffect, useCallback } from "react";
 import { getUser } from "../data/api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../firebaseConfig";
+import { useFocusEffect } from "@react-navigation/native";
+
 
 
 const ClaimedBooks = ({ navigation, route }) => {
@@ -51,13 +53,22 @@ const ClaimedBooks = ({ navigation, route }) => {
       fontSize: 10,
       color: 'black',
     },
+    submit: {
+      backgroundColor: '#5CDB95',
+      alignSelf: 'stretch',
+      borderRadius: 5,
+      alignItems: 'center',
+      padding: 10,
+      marginBottom: 5
+    },
   });
 
   const user_id = user.uid
   const [isLoading, setIsLoading] = useState(true)
   const [userProfileInfo, setUserProfileInfo] = useState(null)
   
-  useEffect(()=>{
+  useFocusEffect(
+  useCallback(()=>{
     setIsLoading(true)
     getUser(user_id).then(userData => {
       const {name, username, claimed_books} = userData
@@ -65,10 +76,11 @@ const ClaimedBooks = ({ navigation, route }) => {
       setIsLoading(false)
 
   }).catch(err => console.log(err))
-  },[user_id])
+  },[user_id]))
 
   return isLoading ? <Text>Loading...</Text> : (
     <SafeAreaView >
+      <ScrollView>
       {userProfileInfo.claimed_books.map(book => {
         return (
           <View key={generateBookId()}style={styles.container}>
@@ -83,6 +95,8 @@ const ClaimedBooks = ({ navigation, route }) => {
         </View>
         )
   })}
+        <Pressable style={styles.submit} onPress={() => navigation.goBack()} ><Text>GO BACK</Text></Pressable>
+        </ScrollView>
     </SafeAreaView>
   );
 

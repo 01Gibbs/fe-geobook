@@ -17,7 +17,6 @@ export const TrackingMarker = () => {
         distanceInterval: 0.1
       },
       location => {
-        //   console.log('location', location)
         setLocation({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude

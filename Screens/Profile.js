@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Text, View, Button, Image, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getUser } from "../data/api";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Profile = ({ navigation }) => {
   const styles = StyleSheet.create({
@@ -95,12 +96,6 @@ const Profile = ({ navigation }) => {
   });
   const user = auth.currentUser;
 
-  // useEffect(() => {
-  //Get current user id
-  //For details and location
-  //   console.log(auth);
-  // }, [user]);
-
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -115,14 +110,12 @@ const Profile = ({ navigation }) => {
     navigation.navigate("ClaimedBooks");
   };
 
-  //Wait for auth to get current user firebase id
-  //set it to getUSer()
-
   const user_id = user.uid;
   const [isLoading, setIsLoading] = useState(true);
   const [userProfileInfo, setUserProfileInfo] = useState(null);
 
-  useEffect(() => {
+  useFocusEffect(
+  useCallback(() => {
     setIsLoading(true);
     getUser(user_id)
       .then((userData) => {
@@ -131,7 +124,7 @@ const Profile = ({ navigation }) => {
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
-  }, [user_id]);
+  }, [user_id]));
 
   return isLoading ? null : (
     <SafeAreaView>

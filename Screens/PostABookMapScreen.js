@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator();
 
 export const PostABookMapScreen = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="PostABookMap">
       <Stack.Screen
         options={{ headerShown: false }}
         name="PostABookMap"

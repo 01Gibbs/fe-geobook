@@ -6,13 +6,13 @@ import {
   StyleSheet,
   Pressable
 } from 'react-native'
-import { useCallback, useState } from 'react'
-import { deleteBook, postBook } from '../data/api'
-import { useFocusEffect } from '@react-navigation/native'
+import { useCallback, useEffect, useState } from 'react'
+import { deleteBook, getUser, postBook } from '../data/api'
+import { StackActions, useFocusEffect } from '@react-navigation/native'
+import { auth } from '../firebaseConfig'
 
 const PostABook = ({ navigation, route }) => {
   const { location, book_id, location_description } = route.params
-  const user = 'testUser'
   const [postBookForm, setPostBookForm] = useState(null)
   const [formFields, setFormFields] = useState({
     title: '',
@@ -32,6 +32,14 @@ const PostABook = ({ navigation, route }) => {
     }, [])
   )
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      navigation.dispatch(StackActions.replace('PostABookMap'))
+    })
+
+    return unsubscribe
+  }, [navigation])
+
   const handlePost = e => {
     e.preventDefault()
     const formMsgCopy = { ...formMsg }
@@ -41,18 +49,21 @@ const PostABook = ({ navigation, route }) => {
       formFields.genre &&
       formFields.location_description
     ) {
-      postBook({
-        ...formFields,
-        posted_by: user,
-        location
-      })
-        .then(book => {
-          setPostBookForm(book)
-          setFormFields({
-            title: '',
-            author: '',
-            genre: '',
-            location_description: ''
+      getUser(auth.currentUser.uid)
+        .then(user => {
+  
+          postBook({
+            ...formFields,
+            posted_by: user.username,
+            location
+          }).then(book => {
+            setPostBookForm(book)
+            setFormFields({
+              title: '',
+              author: '',
+              genre: '',
+              location_description: ''
+            })
           })
         })
         .catch(err => console.log(err.toJSON()))
@@ -69,7 +80,6 @@ const PostABook = ({ navigation, route }) => {
     }
     if (book_id) {
       deleteBook(book_id)
-      console.log('book deleted')
     }
   }
 
@@ -77,10 +87,13 @@ const PostABook = ({ navigation, route }) => {
     <View style={styles.container}>
       <View style={styles.main}>
         <Text>Your book has been submitted!</Text>
-        <Pressable style={styles.submit} onPress={() => {
-          setPostBookForm(null)
-          navigation.navigate('PostABookMap')
-        }}>
+        <Pressable
+          style={styles.submit}
+          onPress={() => {
+            setPostBookForm(null)
+            navigation.navigate('PostABookMap')
+          }}
+        >
           <Text>Submit another book!</Text>
         </Pressable>
       </View>
@@ -174,15 +187,18 @@ const PostABook = ({ navigation, route }) => {
         <Pressable style={styles.submit} onPress={handlePost}>
           <Text>SUBMIT</Text>
         </Pressable>
-        <Pressable style={styles.submit} onPress={() => {
-          if (!book_id) navigation.goBack()
-          else navigation.navigate('Map', {
-            screen: 'MapPage',
-
-          })}} >
+        <Pressable
+          style={styles.submit}
+          onPress={() => {
+            if (!book_id) navigation.navigate('PostABookMap')
+            else
+              navigation.navigate('Map', {
+                screen: 'MapPage'
+              })
+          }}
+        >
           <Text>GO BACK</Text>
         </Pressable>
-        
       </View>
     </View>
   )
@@ -229,7 +245,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     padding: 10,
-    marginBottom:5
+    marginBottom: 5
   },
   error: {
     color: 'red'
