@@ -33,8 +33,8 @@ export const TrackingMarker = () => {
       <Marker coordinate={location} title='You are here!'>
         <Image
           resizeMode='center'
-          style={{ width: 20, height: 20 }}
-          source={require('../../assets/circle-2.png')}
+          style={{ width: 30, height: 30 }}
+          source={require('../../assets/tracking-marker.png')}
         />
       </Marker>
       <Circle
