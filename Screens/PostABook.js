@@ -6,9 +6,10 @@ import {
   StyleSheet,
   Pressable
 } from 'react-native'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { deleteBook, postBook } from '../data/api'
-import { useFocusEffect } from '@react-navigation/native'
+import { StackActions, useFocusEffect } from '@react-navigation/native'
+import { NavigationAction } from '@react-navigation/native'
 
 const PostABook = ({ navigation, route }) => {
   const { location, book_id, location_description } = route.params
@@ -28,9 +29,18 @@ const PostABook = ({ navigation, route }) => {
   })
   useFocusEffect(
     useCallback(() => {
+      console.log(location, book_id, location_description)
       setPostBookForm(null)
     }, [])
   )
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      navigation.dispatch(StackActions.replace('PostABookMap'))
+  });
+
+  return unsubscribe;
+}, [navigation]);
 
   const handlePost = e => {
     e.preventDefault()
@@ -175,10 +185,9 @@ const PostABook = ({ navigation, route }) => {
           <Text>SUBMIT</Text>
         </Pressable>
         <Pressable style={styles.submit} onPress={() => {
-          if (!book_id) navigation.goBack()
+          if (!book_id) navigation.navigate('PostABookMap')
           else navigation.navigate('Map', {
             screen: 'MapPage',
-
           })}} >
           <Text>GO BACK</Text>
         </Pressable>
