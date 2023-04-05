@@ -1,4 +1,4 @@
-import { Text, View, Image, Button, StyleSheet, ScrollView } from "react-native";
+import { Text, View, Image, Button, StyleSheet, ScrollView, Pressable } from "react-native";
 import { useState, useEffect, useCallback } from "react";
 import { getUser } from "../data/api";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -53,6 +53,14 @@ const ClaimedBooks = ({ navigation, route }) => {
       fontSize: 10,
       color: 'black',
     },
+    submit: {
+      backgroundColor: '#5CDB95',
+      alignSelf: 'stretch',
+      borderRadius: 5,
+      alignItems: 'center',
+      padding: 10,
+      marginBottom: 5
+    },
   });
 
   const user_id = user.uid
@@ -86,7 +94,9 @@ const ClaimedBooks = ({ navigation, route }) => {
           </View>
         </View>
         )
-  })}</ScrollView>
+  })}
+        <Pressable style={styles.submit} onPress={() => navigation.goBack()} ><Text>GO BACK</Text></Pressable>
+        </ScrollView>
     </SafeAreaView>
   );
 
