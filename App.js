@@ -60,9 +60,7 @@ export default function App() {
     } else if (route.name === "Add book") {
       iconName = focused ? "book" : "book-outline";
     }
-    return (
-      <Ionicons name={iconName} size={size} color={color} />
-    );
+    return <Ionicons name={iconName} size={size} color={color} />;
   };
 
   return (
@@ -73,12 +71,11 @@ export default function App() {
             <>
               <Tab.Navigator
                 screenOptions={({ route }) => ({
-                  tabBarActiveTintColor: "#5CDB95",
+                  tabBarActiveTintColor: "#132235",
                   tabBarInactiveTintColor: "gray",
-                  tabBarStyle: [{display: "flex",}, null ],
+                  tabBarStyle: [{ display: "flex" }, null],
                   tabBarIcon: ({ focused, color, size }) => {
-                    return displayTabIcons(focused, color, size, route)
-                    
+                    return displayTabIcons(focused, color, size, route);
                   },
                 })}
               >
@@ -90,10 +87,7 @@ export default function App() {
                   name="Profile"
                   component={ProfileStackScreen}
                 />
-                <Tab.Screen
-                  name="Add book"
-                  component={PostABookMapScreen}
-                />
+                <Tab.Screen name="Add book" component={PostABookMapScreen} />
                 {/* <Tab.Screen name='Book Information' component={SingleBook} /> */}
               </Tab.Navigator>
             </>

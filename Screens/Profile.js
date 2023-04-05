@@ -91,7 +91,7 @@ const Profile = ({ navigation }) => {
     },
     logText: {
       fontSize: 16,
-      color: "#fff",
+      color: "#132235",
     },
   });
   const user = auth.currentUser;
@@ -115,16 +115,17 @@ const Profile = ({ navigation }) => {
   const [userProfileInfo, setUserProfileInfo] = useState(null);
 
   useFocusEffect(
-  useCallback(() => {
-    setIsLoading(true);
-    getUser(user_id)
-      .then((userData) => {
-        const { name, username, claimed_books } = userData;
-        setUserProfileInfo({ name, username, claimed_books });
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err));
-  }, [user_id]));
+    useCallback(() => {
+      setIsLoading(true);
+      getUser(user_id)
+        .then((userData) => {
+          const { name, username, claimed_books } = userData;
+          setUserProfileInfo({ name, username, claimed_books });
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }, [user_id])
+  );
 
   return isLoading ? null : (
     <SafeAreaView>
