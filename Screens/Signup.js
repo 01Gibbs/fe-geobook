@@ -182,7 +182,12 @@ const Signup = () => {
         {firebaseError ? (
           <Text style={styles.error}>{firebaseError}</Text>
         ) : null}
-        <Pressable style={styles.submit} onPress={handlePress}>
+        <Pressable  onPress={handlePress}
+          style={({ pressed }) => [
+            styles.submit,
+            { backgroundColor: pressed ? "#83dbab" : "#5CDB95" },
+          ]}
+        >
           <Text>Sign Up</Text>
         </Pressable>
       </View>
@@ -191,25 +196,5 @@ const Signup = () => {
     </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   input: {
-//     width: "80%",
-//     borderWidth: 1,
-//     borderColor: "black",
-//     borderRadius: 5,
-//     paddingHorizontal: 10,
-//     paddingVertical: 5,
-//     marginVertical: 10,
-//   },
-//   error: {
-//     color: "red",
-//   },
-// });
 
 export default Signup;

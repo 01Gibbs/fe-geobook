@@ -113,7 +113,12 @@ const Login = ({ navigation }) => {
         <Text style={styles[errorMsg.password.style]}>
           {errorMsg.password.msg}
         </Text>
-        <Pressable style={styles.submit} onPress={handleSignIn}>
+        <Pressable onPress={handleSignIn}
+        style={({ pressed }) => [
+          styles.submit,
+          { backgroundColor: pressed ? "#83dbab" : "#5CDB95" },
+        ]}
+        >
           <Text>Login</Text>
         </Pressable>
         <Text>Don't have an account?</Text>
