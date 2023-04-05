@@ -1,99 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
-import { Text, View, Button, Image, StyleSheet, Pressable } from "react-native";
+import { useCallback, useState } from "react";
+import { Text, View, Image, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getUser } from "../data/api";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
+import {styles} from '../style_sheets/profile-styling'
 
 const Profile = ({ navigation }) => {
-  const styles = StyleSheet.create({
-    topBar: {
-      padding: 0,
-      paddingBottom: 5,
-      backgroundColor: "#2b5f6b",
-    },
-    bottomBar: {
-      backgroundColor: "#ddd",
-      padding: 15,
-      paddingBottom: 0,
-    },
-    avatarContainer: {
-      padding: 10,
-      paddingTop: 0,
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    tinyImg: {
-      margin: 10,
-      paddingTop: 10,
-      paddingBottom: 5,
-      width: 100,
-      height: 100,
-      borderRadius: 100 / 2,
-    },
-    avatar: {
-      margin: 20,
-      width: 100,
-      height: 100,
-      borderRadius: 100 / 2,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    name: {
-      color: "#132235",
-      fontSize: 18,
-      fontWeight: "bold",
-      marginBottom: 5,
-    },
-    location: {
-      padding: 0,
-      margin: 0,
-      color: "#132235",
-      fontSize: 14,
-      marginBottom: 15,
-    },
-    userItem: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    stats: {
-      marginTop: 3,
-      flexDirection: "column",
-      justifyContent: "space-between",
-      width: "100%",
-    },
-    userItem: {
-      padding: 20,
-      flexDirection: "row",
-      alignItems: "center",
-      borderBottomWidth: 1,
-      borderColor: "#ddd",
-    },
-    statValue: {
-      padding: 10,
-      marginRight: 10,
-      fontSize: 22,
-      fontWeight: "bold",
-    },
-    statTitle: {
-      fontSize: 14,
-      color: "#666",
-    },
-    logout: {
-      justifyContent: "center",
-      marginTop: 30,
-      padding: 10,
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    logText: {
-      fontSize: 16,
-      color: "#132235",
-    },
-  });
+
   const user = auth.currentUser;
 
   const handleSignOut = () => {
@@ -127,7 +42,17 @@ const Profile = ({ navigation }) => {
     }, [user_id])
   );
 
-  return isLoading ? null : (
+  const loadingBooks = () => {
+    return (
+      <SafeAreaView>
+        <View style={styles.container}>
+          <Text style={styles.loading}>Loading...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  };
+
+  return isLoading ? loadingBooks() : (
     <SafeAreaView>
       <View style={styles.topBar}>
         <View style={styles.avatarContainer}>
@@ -141,7 +66,7 @@ const Profile = ({ navigation }) => {
       </View>
       <View style={styles.bottomBar}>
         <Text style={styles.name}>Hello, {userProfileInfo.name}!</Text>
-        <Text style={styles.location}>(user location)</Text>
+        <Text style={styles.location}>Leeds</Text>
       </View>
       <View style={styles.stats}>
         <Pressable

@@ -125,7 +125,7 @@ const Login = ({ navigation }) => {
         </Pressable>
         <Text>Don't have an account?</Text>
         <Pressable onPress={handleSignUp}>
-          <Text>Click to join!</Text>
+          <Text style={styles.underline}>Click to join!</Text>
         </Pressable>
       </View>
       </ScrollView>

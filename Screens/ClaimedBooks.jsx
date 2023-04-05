@@ -32,6 +32,9 @@ const ClaimedBooks = ({ navigation, route }) => {
       borderColor: "#ddd",
       borderTopColor: "transparent",
     },
+    loading:{
+      fontSize:20,
+    },
     imageContainer: {
       width: 100,
       height: 100,
@@ -110,7 +113,7 @@ const ClaimedBooks = ({ navigation, route }) => {
     return (
       <SafeAreaView>
         <View style={styles.container}>
-          <Text>Loading...</Text>
+          <Text style={styles.loading}>Loading...</Text>
         </View>
       </SafeAreaView>
     );

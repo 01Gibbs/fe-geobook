@@ -69,6 +69,10 @@ export const styles = StyleSheet.create({
     padding: 10,
     marginTop:5,
   },
+
+  underline:{
+    textDecorationLine: 'underline',
+  },
   error: {
     color: "red",
   },

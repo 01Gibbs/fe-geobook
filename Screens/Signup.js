@@ -191,9 +191,9 @@ const Signup = ({navigation}) => {
         style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen },]}>
           <Text>Sign Up</Text>
         </Pressable>
-        <Text>Don't have an account?</Text>
+        <Text>Already have an account?</Text>
         <Pressable onPress={handleSignIn}>
-          <Text>Click to join!</Text>
+          <Text style={styles.underline}>Click to login!</Text>
         </Pressable>
       </View>
       </View>
