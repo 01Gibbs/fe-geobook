@@ -10,7 +10,7 @@ export const MapScreen = () => {
       <Stack.Screen options={{ headerShown: false }} name="MapPage">
         {(props) => <Map {...props} />}
       </Stack.Screen>
-      <Stack.Screen name="Book Information" component={SingleBook} />
+      <Stack.Screen options={{ headerShown: false }} name="Book Information" component={SingleBook} />
     </Stack.Navigator>
   );
 };

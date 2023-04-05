@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { UserProvider } from "./context/UserContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Login from "./Screens/Login";
@@ -65,7 +64,6 @@ export default function App() {
 
   return (
     <RootSiblingParent>
-      <UserProvider>
         <NavigationContainer>
           {isSignedIn ? (
             <>
@@ -87,8 +85,7 @@ export default function App() {
                   name="Profile"
                   component={ProfileStackScreen}
                 />
-                <Tab.Screen name="Add book" component={PostABookMapScreen} />
-                {/* <Tab.Screen name='Book Information' component={SingleBook} /> */}
+                <Tab.Screen options={{ headerShown: false }} name="Add book" component={PostABookMapScreen} />
               </Tab.Navigator>
             </>
           ) : (
@@ -110,7 +107,6 @@ export default function App() {
             </>
           )}
         </NavigationContainer>
-      </UserProvider>
     </RootSiblingParent>
   );
 }

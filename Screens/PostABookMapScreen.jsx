@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Map from "./Map";
 import PostABook from "./PostABook";
 import { PostABookMap } from "./PostABookMap";
 

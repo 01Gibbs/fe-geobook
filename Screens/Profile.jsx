@@ -13,9 +13,6 @@ const Profile = ({ navigation }) => {
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => {
-        console.log("You're signed out");
-      })
       .catch((error) => {
         console.log(error);
       });

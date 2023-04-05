@@ -46,6 +46,7 @@ export const PostABookMap = ({ navigation }) => {
   )
 
   return (
+    <SafeAreaView style={styles.container}>
     <View style={styles.container}>
       <View style={styles.container}>
         <MapView style={styles.map} region={mapRegion}>
@@ -88,6 +89,7 @@ export const PostABookMap = ({ navigation }) => {
         <Text style={styles.buttonText}>Set Book Location</Text>
       </Pressable>
     </View>
+    </SafeAreaView>
   );
 };
 

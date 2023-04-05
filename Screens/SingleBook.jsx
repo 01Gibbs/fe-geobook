@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { getBook } from '../data/api'
 import FoundBook from './FoundBook'
 
 export const SingleBook = ({ route, navigation }) => {
+  // is default book_id needed?
   const { book_id } = route.params || { book_id: '6425407dba5e321df2803b39' }
   const [bookInfo, setBookInfo] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -24,7 +25,8 @@ export const SingleBook = ({ route, navigation }) => {
       navigation={navigation}
     />
   ) : (
-    <View style={styles.container}>
+    
+    <SafeAreaView style={styles.container}>
        <View style={styles.main}>  
       <Text style={styles.title}>Genre</Text>
       <Text style={styles.description}>{bookInfo.genre}</Text>
@@ -35,7 +37,7 @@ export const SingleBook = ({ route, navigation }) => {
       <Pressable style={styles.submit} onPress={() => navigation.goBack()} ><Text>GO BACK</Text></Pressable>
       <Pressable style={styles.submit}  onPress={() => setFoundBook(true)} ><Text>FOUND BOOK</Text></Pressable>
     </View>
-    </View>
+    </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({

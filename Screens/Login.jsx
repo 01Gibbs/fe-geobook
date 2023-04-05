@@ -117,6 +117,9 @@ const Login = ({ navigation }) => {
             <Text style={styles[errorMsg.password.style]}>
               {errorMsg.password.msg}
             </Text>
+            <Text style={styles.error}>
+              {firebaseError}
+            </Text>
             <Pressable
               onPress={handleSignIn}
               style={({ pressed }) => [
