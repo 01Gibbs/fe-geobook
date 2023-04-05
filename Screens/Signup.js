@@ -3,9 +3,11 @@ import { Image, Text, TextInput, View, Pressable, ScrollView } from "react-nativ
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { postUser } from "../data/api";
-import { styles } from "../style_sheets/login-signup";
+import { styles } from "../style_sheets/form-styling";
+import { colours } from '../style_sheets/colours'
+const {geoGreen, geoGreenPressed} = colours
 
-const Signup = () => {
+const Signup = ({navigation}) => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -88,7 +90,10 @@ const Signup = () => {
       }
     }
   };
-  
+  const handleSignIn = () => {
+    navigation.navigate("SignIn");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -183,12 +188,12 @@ const Signup = () => {
           <Text style={styles.error}>{firebaseError}</Text>
         ) : null}
         <Pressable  onPress={handlePress}
-          style={({ pressed }) => [
-            styles.submit,
-            { backgroundColor: pressed ? "#83dbab" : "#5CDB95" },
-          ]}
-        >
+        style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen },]}>
           <Text>Sign Up</Text>
+        </Pressable>
+        <Text>Don't have an account?</Text>
+        <Pressable onPress={handleSignIn}>
+          <Text>Click to join!</Text>
         </Pressable>
       </View>
       </View>

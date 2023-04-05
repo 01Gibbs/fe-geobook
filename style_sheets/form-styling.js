@@ -1,22 +1,25 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    padding: 20,
     flex: 1,
+    padding: 20,
     backgroundColor: "#2B5F6B",
     alignContent: "center",
   },
 
-  formContainer:{
-    flex: 1,
-    justifyContent: 'center',
-    paddingBottom:60,
+  ScrollView:{
+    flex: 1, 
   },
 
-  
+  formContainer: {
+    flex: 1,
+    paddingBottom: 60,
+    justifyContent:'center',
+  },
 
   main: {
+    flex:1, 
     margin: 0,
     padding: 10,
     backgroundColor: "#F5F5F5",
@@ -24,13 +27,11 @@ export const styles = StyleSheet.create({
   },
   header: {
     padding: 15,
-    textAlign:'left',
+    textAlign: "left",
   },
   headerText: {
     fontSize: 20,
-    
   },
-
   avatarContainer: {
     flexDirection: "column",
     justifyContent: "center",
@@ -66,6 +67,7 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     padding: 10,
+    marginTop:5,
   },
   error: {
     color: "red",
