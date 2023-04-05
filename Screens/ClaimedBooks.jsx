@@ -11,6 +11,7 @@ import { getUser } from "../data/api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../firebaseConfig";
 import { StackActions, useFocusEffect } from "@react-navigation/native";
+
 import { colours } from "../style_sheets/colours";
 const { geoGreen, geoGreenPressed } = colours;
 
@@ -95,11 +96,7 @@ const ClaimedBooks = ({ navigation }) => {
             </View>
           );
         })}
-        <Pressable
-          style={({ pressed }) => [
-            styles.submit,
-            { backgroundColor: pressed ? geoGreenPressed : geoGreen },
-          ]}
+        <Pressable style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen }, ]}
           onPress={handleClaimBooks}
         >
           <Text>Go claim some books!</Text>

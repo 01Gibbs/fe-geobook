@@ -8,6 +8,8 @@ import * as Location from "expo-location";
 import { getBooks } from "../data/api";
 import { TrackingMarker } from "./Map-Components/TrackingMarker";
 import { useFocusEffect } from "@react-navigation/native";
+import { colours } from "../style_sheets/colours";
+const { geoGreen, geoGreenPressed } = colours;
 
 const Map = ({ navigation }) => {
   const [usersLocation, setUsersLocation] = useState({});
@@ -161,10 +163,7 @@ const Map = ({ navigation }) => {
         </View>
         <Pressable
           onPress={userLocation}
-          style={({ pressed }) => [
-            styles.button,
-            { backgroundColor: pressed ? "#83dbab" : "#5CDB95" },
-          ]}
+          style={({ pressed }) => [ styles.button, { backgroundColor: pressed ? geoGreenPressed : geoGreen }]}
         >
           <Text style={styles.buttonText}>Get Location</Text>
         </Pressable>

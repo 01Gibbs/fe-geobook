@@ -189,7 +189,7 @@ const Signup = ({navigation}) => {
           <Text style={styles.error}>{firebaseError}</Text>
         ) : null}
         <Pressable  onPress={handlePress}
-        style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen },]}>
+        style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen }]}>
           <Text>Sign Up</Text>
         </Pressable>
         <Text>Already have an account?</Text>

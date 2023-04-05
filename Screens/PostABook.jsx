@@ -1,9 +1,9 @@
-import { Text, View, TextInput, ScrollView, Pressable } from "react-native";
+import { Text, View, TextInput, ScrollView, Pressable, StyleSheet } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { deleteBook, getUser, postBook } from "../data/api";
 import { StackActions, useFocusEffect } from "@react-navigation/native";
 import { auth } from "../firebaseConfig";
-import { styles } from "../style_sheets/form-styling";
+// import { styles } from "../style_sheets/form-styling";
 import { colours } from "../style_sheets/colours";
 import { SafeAreaView } from "react-native-safe-area-context";
 const { geoGreen, geoGreenPressed } = colours;
@@ -83,10 +83,11 @@ const PostABook = ({ navigation, route }) => {
 
   return postBookForm ? (
     <SafeAreaView style={styles.container}>
+      <View >
       <View style={styles.main}>
         <Text>Your book has been submitted!</Text>
         <Pressable
-          style={styles.submit}
+          style={({ pressed }) => [ styles.submit,{ backgroundColor: pressed ? geoGreenPressed : geoGreen }, ]}
           onPress={() => {
             setPostBookForm(null);
             navigation.navigate("PostABookMap");
@@ -95,11 +96,12 @@ const PostABook = ({ navigation, route }) => {
           <Text>Submit another book!</Text>
         </Pressable>
       </View>
+      </View>
     </SafeAreaView>
   ) : (
     <SafeAreaView style={styles.container}>
-      <ScrollView keyboardShouldPersistTaps="handled">
-        <View style={styles.formContainer}>
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.formContainer}>
+        {/* <View style={styles.formContainer}> */}
           <View style={styles.main}>
             <View styls={styles.header}>
               <Text style={styles.title}>Post your book here!</Text>
@@ -196,10 +198,7 @@ const PostABook = ({ navigation, route }) => {
               {formMsg.location_description.msg}
             </Text>
             <Pressable
-              style={({ pressed }) => [
-                styles.submit,
-                { backgroundColor: pressed ? geoGreenPressed : geoGreen },
-              ]}
+              style={({ pressed }) => [ styles.submit,{ backgroundColor: pressed ? geoGreenPressed : geoGreen }, ]}
               onPress={handlePost}
             >
               <Text>SUBMIT</Text>
@@ -220,10 +219,64 @@ const PostABook = ({ navigation, route }) => {
               <Text>GO BACK</Text>
             </Pressable>
           </View>
-        </View>
+        {/* </View> */}
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    padding:20,
+    flex: 1,
+    backgroundColor:'#2B5F6B',
+    justifyContent:'center',
+    alignContent:'center',
+  },
+  header: {
+    alignItems: 'left',
+    alignText:'left',
+
+  },
+  title: {
+    fontSize:18,
+    fontWeight: 600,
+  },
+  description: {
+    fontSize:16,
+    marginBottom:15,
+  },
+  main: {
+    margin:0,
+    padding:10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#F5F5F5',
+    // backgroundColor:'#132235',
+    borderRadius:5,
+  },
+  input: {
+    alignItems:'center',
+    alignSelf: 'stretch',
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginTop: 5,
+  },
+  submit: {
+    backgroundColor:'#5CDB95',
+    alignSelf: 'stretch',
+    borderRadius:5,
+    alignItems:'center',
+    padding:10,
+    marginBottom:15,
+  },
+  error: {
+    color: 'red'
+  }
+})
 
 export default PostABook;

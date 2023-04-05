@@ -6,6 +6,8 @@ import { StyleSheet } from "react-native";
 import MapView from "react-native-map-clustering";
 import { useFocusEffect } from "@react-navigation/native";
 import * as Location from "expo-location";
+import { colours } from "../style_sheets/colours";
+const { geoGreen, geoGreenPressed } = colours;
 
 export const PostABookMap = ({ navigation }) => {
   const [markerCoordinate, setMarkerCoordinate] = useState({
@@ -83,8 +85,7 @@ export const PostABookMap = ({ navigation }) => {
         }}
         style={({ pressed }) => [
           styles.button,
-          { backgroundColor: pressed ? "#83dbab" : "#5CDB95" },
-        ]}
+          { backgroundColor: pressed ? geoGreenPressed : geoGreen },]}
       >
         <Text style={styles.buttonText}>Set Book Location</Text>
       </Pressable>

@@ -6,6 +6,8 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
 import {styles} from '../style_sheets/profile-styling'
+import { colours } from "../style_sheets/colours";
+const { geoGreen, geoGreenPressed } = colours;
 
 const Profile = ({ navigation }) => {
 
@@ -70,7 +72,7 @@ const Profile = ({ navigation }) => {
           onPress={viewClaimedBooks}
           style={({ pressed }) => [
             styles.userItem,
-            { backgroundColor: pressed ? "#ddd" : "#fff" },
+            { backgroundColor: pressed ? "#ddd" : "#fff" }
           ]}
         >
           <Text style={styles.statValue}>
@@ -81,7 +83,7 @@ const Profile = ({ navigation }) => {
         <Pressable
           style={({ pressed }) => [
             styles.userItem,
-            { backgroundColor: pressed ? "#ddd" : "#fff" },
+            { backgroundColor: pressed ? "#ddd" : "#fff" }
           ]}
         >
           <Text style={styles.statValue}>X</Text>
@@ -93,7 +95,7 @@ const Profile = ({ navigation }) => {
         onPress={handleSignOut}
         style={({ pressed }) => [
           styles.logout,
-          { backgroundColor: pressed ? "#83dbab" : "#5CDB95" },
+          { backgroundColor: pressed ? geoGreenPressed : geoGreen }
         ]}
       >
         <Text style={styles.logText}>Sign out</Text>

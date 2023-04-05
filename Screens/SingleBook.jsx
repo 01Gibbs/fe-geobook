@@ -3,6 +3,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { getBook } from '../data/api'
 import FoundBook from './FoundBook'
+import { colours } from "../style_sheets/colours";
+const { geoGreen, geoGreenPressed } = colours;
 
 export const SingleBook = ({ route, navigation }) => {
   // is default book_id needed?
@@ -28,15 +30,19 @@ export const SingleBook = ({ route, navigation }) => {
   ) : (
     
     <SafeAreaView style={styles.container}>
-       <View style={styles.main}>  
-      <Text style={styles.title}>Genre</Text>
-      <Text style={styles.description}>{bookInfo.genre}</Text>
-      <Text style={styles.title}>Location description</Text>
-      <Text style={styles.description}>{bookInfo.location_description}</Text>
-      <Text style={styles.title}>Left by</Text>
-      <Text style={styles.description}>{bookInfo.posted_by}</Text>
-      <Pressable style={styles.submit} onPress={() => navigation.goBack()} ><Text>GO BACK</Text></Pressable>
-      <Pressable style={styles.submit}  onPress={() => setFoundBook(true)} ><Text>FOUND BOOK</Text></Pressable>
+      <View style={styles.main}>  
+        <Text style={styles.title}>Genre</Text>
+        <Text style={styles.description}>{bookInfo.genre}</Text>
+        <Text style={styles.title}>Location description</Text>
+        <Text style={styles.description}>{bookInfo.location_description}</Text>
+        <Text style={styles.title}>Left by</Text>
+        <Text style={styles.description}>{bookInfo.posted_by}</Text>
+        <Pressable 
+        style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen }]}
+        onPress={() => navigation.goBack()} ><Text>GO BACK</Text></Pressable>
+        <Pressable 
+        style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen }]}
+        onPress={() => setFoundBook(true)} ><Text>FOUND BOOK</Text></Pressable>
     </View>
     </SafeAreaView>
   )

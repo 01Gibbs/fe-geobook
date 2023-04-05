@@ -5,6 +5,8 @@ import Toast from "react-native-root-toast";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getClaimedBookThumbnail, patchUser } from "../data/api";
 import { auth } from "../firebaseConfig";
+import { colours } from "../style_sheets/colours";
+const { geoGreen, geoGreenPressed } = colours;
 
 const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
   const [bookTitle, setBookTitle] = useState("");
@@ -54,10 +56,14 @@ const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
           onChange={(e) => setBookTitle(e.nativeEvent.text)}
         ></TextInput>
         <Text style={styles.error}>{errorMsg}</Text>
-        <Pressable style={styles.submit} onPress={handlePress}>
+        <Pressable 
+        style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen },]}
+        onPress={handlePress}>
           <Text>CLAIM BOOK</Text>
         </Pressable>
-        <Pressable style={styles.submit} onPress={() => setFoundBook(false)}>
+        <Pressable 
+        style={({ pressed }) => [ styles.submit, { backgroundColor: pressed ? geoGreenPressed : geoGreen },]}
+        onPress={() => setFoundBook(false)}>
           <Text>GO BACK</Text>
         </Pressable>
       </View>

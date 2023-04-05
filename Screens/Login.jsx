@@ -10,8 +10,8 @@ import {
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { styles } from "../style_sheets/form-styling";
 import { auth } from "../firebaseConfig";
-import { colours } from "../style_sheets/colours";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { colours } from "../style_sheets/colours";
 const { geoGreen, geoGreenPressed } = colours;
 
 const Login = ({ navigation }) => {
