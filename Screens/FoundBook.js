@@ -20,8 +20,9 @@ const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
 
 
   const user_id = auth.currentUser.uid
-  console.log(bookInfo.title)
+  
   const handlePress = () => {
+    console.log(bookInfo.title)
     if (bookTitle.toLowerCase().trim() === bookInfo.title.toLowerCase()) {
       navigation.dispatch(StackActions.replace('MapPage'))
       setErrorMsg('')
@@ -31,7 +32,7 @@ const FoundBook = ({ bookInfo, setFoundBook, navigation }) => {
           author: bookInfo.author,
           genre: bookInfo.genre,
           thumbnail
-        }).then(res => console.log(res))
+        })
       })
       let toast = Toast.show(
         'Congratulations on finding the book! Please leave a new book in its place!',

@@ -96,12 +96,6 @@ const Profile = ({ navigation }) => {
   });
   const user = auth.currentUser;
 
-  // useEffect(() => {
-  //Get current user id
-  //For details and location
-  //   console.log(auth);
-  // }, [user]);
-
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -115,9 +109,6 @@ const Profile = ({ navigation }) => {
   const viewClaimedBooks = () => {
     navigation.navigate("ClaimedBooks");
   };
-
-  //Wait for auth to get current user firebase id
-  //set it to getUSer()
 
   const user_id = user.uid;
   const [isLoading, setIsLoading] = useState(true);
